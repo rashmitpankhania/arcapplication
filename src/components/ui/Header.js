@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     tabContainer: {
         marginLeft: 'auto'
     },
-    tab :{
+    tab: {
         ...theme.typography.tab,
         minWidth: 10,
         marginLeft: '25px'
@@ -49,13 +49,18 @@ const ElevationScroll = (props) => {
 
 const Header = () => {
     const classes = useStyles();
+    const [value, setValue] = React.useState();
+    const handleClick = (e, val) => {
+        setValue(val);
+    };
     return (
         <>
             <ElevationScroll>
                 <AppBar position="fixed">
                     <Toolbar disableGutters>
                         <img src={logo} className={classes.logo} alt="company logo"/>
-                        <Tabs className={classes.tabContainer}>
+                        <Tabs value={value} className={classes.tabContainer} onChange={handleClick}
+                              indicatorColor="primary">
                             <Tab className={classes.tab} label="Home"/>
                             <Tab className={classes.tab} label="Services"/>
                             <Tab className={classes.tab} label="Revolution"/>
