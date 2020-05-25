@@ -7,6 +7,8 @@ import React from 'react';
 import { Tab } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
+import { PageNames, Routes } from '../Constants';
 
 const useStyles = makeStyles((theme) => ({
     toolBarMargin: {
@@ -49,7 +51,7 @@ const ElevationScroll = (props) => {
 
 const Header = () => {
     const classes = useStyles();
-    const [value, setValue] = React.useState();
+    const [value, setValue] = React.useState(0);
     const handleClick = (e, val) => {
         setValue(val);
     };
@@ -61,11 +63,15 @@ const Header = () => {
                         <img src={logo} className={classes.logo} alt="company logo"/>
                         <Tabs value={value} className={classes.tabContainer} onChange={handleClick}
                               indicatorColor="primary">
-                            <Tab className={classes.tab} label="Home"/>
-                            <Tab className={classes.tab} label="Services"/>
-                            <Tab className={classes.tab} label="Revolution"/>
-                            <Tab className={classes.tab} label="About Us"/>
-                            <Tab className={classes.tab} label="Contact Us"/>
+                            <Tab className={classes.tab} label={PageNames.HOME} component={Link} to={Routes.HOME}/>
+                            <Tab className={classes.tab} label={PageNames.SERVICES} component={Link}
+                                 to={Routes.SERVICES}/>
+                            <Tab className={classes.tab} label={PageNames.REVOLUTION} component={Link}
+                                 to={Routes.REVOLUTION}/>
+                            <Tab className={classes.tab} label={PageNames.ABOUT_US} component={Link}
+                                 to={Routes.ABOUT_US}/>
+                            <Tab className={classes.tab} label={PageNames.CONTACT_US} component={Link}
+                                 to={Routes.CONTACT_US}/>
                         </Tabs>
                         <Button variant="contained" color="secondary" className={classes.button}>Free Estimate</Button>
                     </Toolbar>
