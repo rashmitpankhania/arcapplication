@@ -22,6 +22,9 @@ export const PageNames = {
   ESTIMATE: 'Estimate',
 };
 
-export const ServicesMenu = [{ name: 'Custom Software Development', route: Routes.CUSTOM_SOFTWARE },
-  { name: 'Mobile App Development', route: Routes.MOBILE_APPS },
-  { name: 'Website Development', route: Routes.WEBSITES }];
+export const ServicesMenu = [
+  { name: PageNames.SERVICES, route: Routes.SERVICES },
+  { name: PageNames.CUSTOM_SOFTWARE, route: Routes.CUSTOM_SOFTWARE },
+  { name: PageNames.MOBILE_APPS, route: Routes.MOBILE_APPS },
+  { name: PageNames.WEBSITES, route: Routes.WEBSITES },
+];
