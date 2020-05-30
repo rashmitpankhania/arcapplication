@@ -21,3 +21,7 @@ export const PageNames = {
   CONTACT_US: 'Contact Us',
   ESTIMATE: 'Estimate',
 };
+
+export const ServicesMenu = [{ name: 'Custom Software Development', route: Routes.CUSTOM_SOFTWARE },
+  { name: 'Mobile App Development', route: Routes.MOBILE_APPS },
+  { name: 'Website Development', route: Routes.WEBSITES }];

@@ -7,9 +7,10 @@ import { Tab } from '@material-ui/core';
 import Tabs from '@material-ui/core/Tabs';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import logo from '../../assets/logo.svg';
-import { PageNames, Routes } from '../Constants';
+import { PageNames, Routes, ServicesMenu } from '../Constants';
 
 const useStyles = makeStyles((theme) => ({
   toolBarMargin: {
@@ -59,6 +60,17 @@ const ElevationScroll = (props) => {
 const Header = () => {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const menuHandleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+    setOpen(true);
+  };
+
+  const menuHandleClose = (e) => {
+    setAnchorEl(null);
+    setOpen(false);
+  };
   const handleClick = (e, val) => {
     setValue(val);
   };
@@ -100,6 +112,10 @@ const Header = () => {
                 label={PageNames.SERVICES}
                 component={Link}
                 to={Routes.SERVICES}
+                onClick={(e) => menuHandleClick(e)}
+                aria-controls="services menu"
+                aria-haspopup={anchorEl ? 'true' : undefined}
+                aria-owns={anchorEl ? 'my menu' : undefined}
               />
               <Tab
                 className={classes.tab}
@@ -121,6 +137,25 @@ const Header = () => {
               />
             </Tabs>
             <Button variant="contained" color="secondary" className={classes.button}>Free Estimate</Button>
+            <Menu
+              id="services menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={menuHandleClose}
+              // MenuListProps={{ onMouseOut: menuHandleClose }}
+            >
+              {ServicesMenu.map((obj) => (
+                <MenuItem
+                  key={obj.name}
+                  onClick={menuHandleClose}
+                  component={Link}
+                  to={obj.route}
+                >
+                  {obj.name}
+                </MenuItem>
+              ))}
+            </Menu>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
