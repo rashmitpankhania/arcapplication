@@ -11,6 +11,9 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import useTheme from '@material-ui/core/styles/useTheme';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 import logo from '../../assets/logo.svg';
 import { PageNames, Routes, ServicesMenu } from '../Constants';
 
@@ -18,9 +21,21 @@ const useStyles = makeStyles((theme) => ({
   toolBarMargin: {
     ...theme.mixins.toolbar,
     marginBottom: '3em',
+    [theme.breakpoints.down('md')]: {
+      marginBottom: '2em',
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: '1.25em',
+    },
   },
   logo: {
     height: '8em',
+    [theme.breakpoints.down('md')]: {
+      height: '7em',
+    },
+    [theme.breakpoints.down('xs')]: {
+      height: '5.5em',
+    },
   },
   logo_container: {
     padding: '0',
@@ -59,8 +74,24 @@ const useStyles = makeStyles((theme) => ({
       opacity: 1,
     },
   },
+  drawerIconContainer: {
+    marginLeft: 'auto',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+    '&:focus': {
+      backgroundColor: 'transparent',
+    },
+  },
+  drawerIcon: {
+    height: '50px',
+    width: '50px',
+    color: 'white',
+    opacity: 0.7,
+  },
 }));
 
+// ElevationScroll is for the effect when we scroll it kinds of create an elevation in the header
 const ElevationScroll = (props) => {
   const { children } = props;
 
@@ -76,23 +107,26 @@ const ElevationScroll = (props) => {
 
 const Header = () => {
   const classes = useStyles();
+  // noinspection JSUnresolvedVariable
+  const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [open, setOpen] = React.useState(false);
+  const [openMenu, setOpenMenu] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   const menuHandleClick = (e) => {
     setAnchorEl(e.currentTarget);
-    setOpen(true);
+    setOpenMenu(true);
   };
-
   const menuHandleClose = (e, index) => {
     setSelectedIndex(index);
     setAnchorEl(null);
-    setOpen(false);
+    setOpenMenu(false);
   };
   const handleClick = (e, val) => {
     setValue(val);
@@ -196,7 +230,7 @@ const Header = () => {
         id="services menu"
         anchorEl={anchorEl}
         keepMounted
-        open={open}
+        open={openMenu}
         onClose={menuHandleClose}
         classes={{ paper: classes.menu }}
         elevation={0}
@@ -216,6 +250,27 @@ const Header = () => {
       </Menu>
     </>
   );
+
+  const drawerView = (
+    <>
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        onClose={() => setOpenDrawer(false)}
+        onOpen={() => setOpenDrawer(true)}
+        open={openDrawer}
+      >
+        my Drawer
+      </SwipeableDrawer>
+      <IconButton
+        className={classes.drawerIconContainer}
+        onClick={() => setOpenDrawer(!openDrawer)}
+        disableRipple
+      >
+        <MenuIcon className={classes.drawerIcon} />
+      </IconButton>
+    </>
+  );
   return (
     <>
       <ElevationScroll>
@@ -230,7 +285,7 @@ const Header = () => {
             >
               <img src={logo} className={classes.logo} alt="company logo" />
             </Button>
-            { matches ? null : tabView }
+            { matches ? drawerView : tabView }
           </Toolbar>
         </AppBar>
       </ElevationScroll>
