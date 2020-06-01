@@ -19,7 +19,7 @@ export const PageNames = {
   REVOLUTION: 'Revolution',
   ABOUT_US: 'About Us',
   CONTACT_US: 'Contact Us',
-  ESTIMATE: 'Estimate',
+  ESTIMATE: 'Free Estimate',
 };
 
 export const ServicesMenu = [

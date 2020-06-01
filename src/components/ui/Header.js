@@ -14,8 +14,13 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import ListItemText from '@material-ui/core/ListItemText';
+import {
+  PageNames, Routes, ServicesMenu,
+} from '../Constants';
 import logo from '../../assets/logo.svg';
-import { PageNames, Routes, ServicesMenu } from '../Constants';
 
 const useStyles = makeStyles((theme) => ({
   toolBarMargin: {
@@ -88,6 +93,19 @@ const useStyles = makeStyles((theme) => ({
     width: '50px',
     color: 'white',
     opacity: 0.7,
+  },
+  drawer: {
+    backgroundColor: theme.palette.common.arcBlue,
+  },
+  drawerItem: {
+    ...theme.typography.tab,
+    color: 'white',
+    opacity: 0.7,
+  },
+  drawerItemEstimate: {
+    backgroundColor: theme.palette.common.arcOrange,
+    fontFamily: 'Pacifico',
+    color: 'white',
   },
 }));
 
@@ -225,7 +243,7 @@ const Header = () => {
           to={Routes.CONTACT_US}
         />
       </Tabs>
-      <Button variant="contained" color="secondary" className={classes.button}>Free Estimate</Button>
+      <Button variant="contained" component={Link} to={Routes.ESTIMATE} color="secondary" className={classes.button}>Free Estimate</Button>
       <Menu
         id="services menu"
         anchorEl={anchorEl}
@@ -259,8 +277,89 @@ const Header = () => {
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
         open={openDrawer}
+        classes={{ paper: classes.drawer }}
       >
-        my Drawer
+        <List disablePadding>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to={Routes.HOME}
+          >
+            <ListItemText
+              disableTypography
+              className={classes.drawerItem}
+              primary={PageNames.HOME}
+            />
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to={Routes.SERVICES}
+          >
+            <ListItemText
+              disableTypography
+              className={classes.drawerItem}
+              primary={PageNames.SERVICES}
+            />
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to={Routes.REVOLUTION}
+          >
+            <ListItemText
+              disableTypography
+              className={classes.drawerItem}
+              primary={PageNames.REVOLUTION}
+            />
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to={Routes.ABOUT_US}
+          >
+            <ListItemText
+              disableTypography
+              className={classes.drawerItem}
+              primary={PageNames.ABOUT_US}
+            />
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to={Routes.CONTACT_US}
+          >
+            <ListItemText
+              disableTypography
+              className={classes.drawerItem}
+              primary={PageNames.CONTACT_US}
+            />
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            className={classes.drawerItemEstimate}
+            button
+            component={Link}
+            to={Routes.ESTIMATE}
+          >
+            <ListItemText
+              disableTypography
+              // className={classes.drawerItem}
+              primary={PageNames.ESTIMATE}
+            />
+          </ListItem>
+        </List>
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}
