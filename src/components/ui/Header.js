@@ -17,9 +17,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
-import {
-  PageNames, Routes, ServicesMenu,
-} from '../Constants';
+import { PageNames, Routes } from '../Constants';
 import logo from '../../assets/logo.svg';
 
 const useStyles = makeStyles((theme) => ({
@@ -107,6 +105,9 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Pacifico',
     color: 'white',
   },
+  drawerSelectedItem: {
+    opacity: 1,
+  },
 }));
 
 // ElevationScroll is for the effect when we scroll it kinds of create an elevation in the header
@@ -149,56 +150,55 @@ const Header = () => {
   const handleClick = (e, val) => {
     setValue(val);
   };
+  const ServicesMenu = [
+    {
+      name: PageNames.SERVICES, route: Routes.SERVICES, activeIndex: 1, selectedIndex: 0,
+    },
+    {
+      name: PageNames.CUSTOM_SOFTWARE,
+      route: Routes.CUSTOM_SOFTWARE,
+      activeIndex: 1,
+      selectedIndex: 1,
+    },
+    {
+      name: PageNames.MOBILE_APPS, route: Routes.MOBILE_APPS, activeIndex: 1, selectedIndex: 2,
+    },
+    {
+      name: PageNames.WEBSITES, route: Routes.WEBSITES, activeIndex: 1, selectedIndex: 3,
+    },
+  ];
+  const BaseMenu = [
+    { name: PageNames.HOME, route: Routes.HOME, activeIndex: 0 },
+    {
+      name: PageNames.SERVICES,
+      route: Routes.SERVICES,
+      activeIndex: 1,
+      onClick: (e) => menuHandleClick(e),
+      aria_controls: 'services menu',
+      aria_haspopup: anchorEl ? 'true' : undefined,
+      aria_owns: anchorEl ? 'my menu' : undefined,
+    },
+    { name: PageNames.REVOLUTION, route: Routes.REVOLUTION, activeIndex: 2 },
+    { name: PageNames.ABOUT_US, route: Routes.ABOUT_US, activeIndex: 3 },
+    { name: PageNames.CONTACT_US, route: Routes.CONTACT_US, activeIndex: 4 },
+
+  ];
   React.useEffect(() => {
-    switch (window.location.pathname) {
-      default:
-        setValue(0);
-        break;
-      case (Routes.HOME):
-        if (value !== 0) {
-          setValue(0);
-        }
-        break;
-      case (Routes.SERVICES):
-        if (value !== 1) {
-          setValue(1);
-          setSelectedIndex(0);
-        }
-        break;
-      case (Routes.CUSTOM_SOFTWARE):
-        if (value !== 1) {
-          setValue(1);
-          setSelectedIndex(1);
-        }
-        break;
-      case (Routes.MOBILE_APPS):
-        if (value !== 1) {
-          setValue(1);
-          setSelectedIndex(2);
-        }
-        break;
-      case (Routes.WEBSITES):
-        if (value !== 1) {
-          setValue(1);
-          setSelectedIndex(3);
-        }
-        break;
-      case (Routes.REVOLUTION):
-        if (value !== 2) {
-          setValue(2);
-        }
-        break;
-      case (Routes.ABOUT_US):
-        if (value !== 3) {
-          setValue(3);
-        }
-        break;
-      case (Routes.CONTACT_US):
-        if (value !== 4) {
-          setValue(4);
-        }
-    }
-  }, [value]);
+    [...ServicesMenu, ...BaseMenu].forEach((obj) => {
+      switch (window.location.pathname) {
+        case `${obj.route}`:
+          if (value !== obj.activeIndex) {
+            setValue(obj.activeIndex);
+            if (obj.selectedIndex && obj.selectedIndex !== selectedIndex) {
+              setSelectedIndex(obj.selectedIndex);
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }, [value, ServicesMenu, BaseMenu, selectedIndex]);
 
   const tabView = (
     <>
@@ -208,42 +208,24 @@ const Header = () => {
         onChange={handleClick}
         indicatorColor="primary"
       >
-        <Tab
-          className={classes.tab}
-          label={PageNames.HOME}
-          component={Link}
-          to={Routes.HOME}
-        />
-        <Tab
-          className={classes.tab}
-          label={PageNames.SERVICES}
-          component={Link}
-          to={Routes.SERVICES}
-          onClick={(e) => menuHandleClick(e)}
-          aria-controls="services menu"
-          aria-haspopup={anchorEl ? 'true' : undefined}
-          aria-owns={anchorEl ? 'my menu' : undefined}
-        />
-        <Tab
-          className={classes.tab}
-          label={PageNames.REVOLUTION}
-          component={Link}
-          to={Routes.REVOLUTION}
-        />
-        <Tab
-          className={classes.tab}
-          label={PageNames.ABOUT_US}
-          component={Link}
-          to={Routes.ABOUT_US}
-        />
-        <Tab
-          className={classes.tab}
-          label={PageNames.CONTACT_US}
-          component={Link}
-          to={Routes.CONTACT_US}
-        />
+        {BaseMenu.map((obj) => (
+          <Tab
+            key={obj.name}
+            className={classes.tab}
+            label={obj.name}
+            component={Link}
+            to={obj.route}
+            onClick={obj.onClick}
+            aria-controls={obj.aria_controls}
+            aria-haspopup={obj.aria_haspopup}
+            aria-owns={obj.aria_owns}
+          />
+        ))}
       </Tabs>
-      <Button variant="contained" component={Link} to={Routes.ESTIMATE} color="secondary" className={classes.button}>Free Estimate</Button>
+      <Button variant="contained" component={Link} to={Routes.ESTIMATE} color="secondary" className={classes.button}>
+        Free
+        Estimate
+      </Button>
       <Menu
         id="services menu"
         anchorEl={anchorEl}
@@ -280,74 +262,29 @@ const Header = () => {
         classes={{ paper: classes.drawer }}
       >
         <List disablePadding>
+          {BaseMenu.map((obj) => (
+            <ListItem
+              key={obj.name}
+              selected={value === obj.activeIndex}
+              onClick={() => {
+                setOpenDrawer(false);
+                setValue(obj.activeIndex);
+              }}
+              divider
+              button
+              component={Link}
+              to={obj.route}
+            >
+              <ListItemText
+                disableTypography
+                className={value === obj.activeIndex
+                  ? [classes.drawerItem, classes.drawerSelectedItem] : classes.drawerItem}
+                primary={obj.name}
+              />
+            </ListItem>
+          ))}
           <ListItem
             onClick={() => setOpenDrawer(false)}
-            divider
-            button
-            component={Link}
-            to={Routes.HOME}
-          >
-            <ListItemText
-              disableTypography
-              className={classes.drawerItem}
-              primary={PageNames.HOME}
-            />
-          </ListItem>
-          <ListItem
-            onClick={() => setOpenDrawer(false)}
-            divider
-            button
-            component={Link}
-            to={Routes.SERVICES}
-          >
-            <ListItemText
-              disableTypography
-              className={classes.drawerItem}
-              primary={PageNames.SERVICES}
-            />
-          </ListItem>
-          <ListItem
-            onClick={() => setOpenDrawer(false)}
-            divider
-            button
-            component={Link}
-            to={Routes.REVOLUTION}
-          >
-            <ListItemText
-              disableTypography
-              className={classes.drawerItem}
-              primary={PageNames.REVOLUTION}
-            />
-          </ListItem>
-          <ListItem
-            onClick={() => setOpenDrawer(false)}
-            divider
-            button
-            component={Link}
-            to={Routes.ABOUT_US}
-          >
-            <ListItemText
-              disableTypography
-              className={classes.drawerItem}
-              primary={PageNames.ABOUT_US}
-            />
-          </ListItem>
-          <ListItem
-            onClick={() => setOpenDrawer(false)}
-            divider
-            button
-            component={Link}
-            to={Routes.CONTACT_US}
-          >
-            <ListItemText
-              disableTypography
-              className={classes.drawerItem}
-              primary={PageNames.CONTACT_US}
-            />
-          </ListItem>
-          <ListItem
-            onClick={() => setOpenDrawer(false)}
-            divider
             className={classes.drawerItemEstimate}
             button
             component={Link}
@@ -355,7 +292,6 @@ const Header = () => {
           >
             <ListItemText
               disableTypography
-              // className={classes.drawerItem}
               primary={PageNames.ESTIMATE}
             />
           </ListItem>
@@ -384,7 +320,7 @@ const Header = () => {
             >
               <img src={logo} className={classes.logo} alt="company logo" />
             </Button>
-            { matches ? drawerView : tabView }
+            {matches ? drawerView : tabView}
           </Toolbar>
         </AppBar>
       </ElevationScroll>

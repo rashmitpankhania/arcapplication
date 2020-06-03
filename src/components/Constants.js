@@ -21,10 +21,3 @@ export const PageNames = {
   CONTACT_US: 'Contact Us',
   ESTIMATE: 'Free Estimate',
 };
-
-export const ServicesMenu = [
-  { name: PageNames.SERVICES, route: Routes.SERVICES },
-  { name: PageNames.CUSTOM_SOFTWARE, route: Routes.CUSTOM_SOFTWARE },
-  { name: PageNames.MOBILE_APPS, route: Routes.MOBILE_APPS },
-  { name: PageNames.WEBSITES, route: Routes.WEBSITES },
-];
