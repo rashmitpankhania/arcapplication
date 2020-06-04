@@ -20,6 +20,24 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { PageNames, Routes } from '../Constants';
 import logo from '../../assets/logo.svg';
 
+export const ServicesMenu = [
+  {
+    name: PageNames.SERVICES, route: Routes.SERVICES, activeIndex: 1, selectedIndex: 0,
+  },
+  {
+    name: PageNames.CUSTOM_SOFTWARE,
+    route: Routes.CUSTOM_SOFTWARE,
+    activeIndex: 1,
+    selectedIndex: 1,
+  },
+  {
+    name: PageNames.MOBILE_APPS, route: Routes.MOBILE_APPS, activeIndex: 1, selectedIndex: 2,
+  },
+  {
+    name: PageNames.WEBSITES, route: Routes.WEBSITES, activeIndex: 1, selectedIndex: 3,
+  },
+];
+
 const useStyles = makeStyles((theme) => ({
   toolBarMargin: {
     ...theme.mixins.toolbar,
@@ -155,23 +173,7 @@ const Header = () => {
   const handleClick = (e, val) => {
     setValue(val);
   };
-  const ServicesMenu = [
-    {
-      name: PageNames.SERVICES, route: Routes.SERVICES, activeIndex: 1, selectedIndex: 0,
-    },
-    {
-      name: PageNames.CUSTOM_SOFTWARE,
-      route: Routes.CUSTOM_SOFTWARE,
-      activeIndex: 1,
-      selectedIndex: 1,
-    },
-    {
-      name: PageNames.MOBILE_APPS, route: Routes.MOBILE_APPS, activeIndex: 1, selectedIndex: 2,
-    },
-    {
-      name: PageNames.WEBSITES, route: Routes.WEBSITES, activeIndex: 1, selectedIndex: 3,
-    },
-  ];
+
   const BaseMenu = [
     { name: PageNames.HOME, route: Routes.HOME, activeIndex: 0 },
     {
@@ -340,5 +342,4 @@ const Header = () => {
     </>
   );
 };
-
 export default Header;
