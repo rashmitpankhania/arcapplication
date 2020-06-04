@@ -7,13 +7,14 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './ui/Header';
 import theme from './ui/Theme';
 import { PageNames, Routes } from './Constants';
+import Footer from './ui/Footer';
 
 const App = () => (
   <ThemeProvider theme={theme}>
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route exact path={Routes.HOME} component={() => <h1>{PageNames.HOME}</h1>} />
+        <Route exact path={Routes.HOME} component={() => <h1 style={{ height: '1000px' }}>{PageNames.HOME}</h1>} />
         <Route exact path={Routes.SERVICES} component={() => <h1>{PageNames.SERVICES}</h1>} />
         <Route exact path={Routes.MOBILE_APPS} component={() => <h1>{PageNames.MOBILE_APPS}</h1>} />
         <Route
@@ -27,6 +28,7 @@ const App = () => (
         <Route exact path={Routes.CONTACT_US} component={() => <h1>{PageNames.CONTACT_US}</h1>} />
         <Route exact path={Routes.WEBSITES} component={() => <h1>{PageNames.WEBSITES}</h1>} />
       </Switch>
+      <Footer />
     </BrowserRouter>
   </ThemeProvider>
 );
