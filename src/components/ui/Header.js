@@ -106,7 +106,12 @@ const useStyles = makeStyles((theme) => ({
     color: 'white',
   },
   drawerSelectedItem: {
-    opacity: 1,
+    '& .MuiListItemText-root': {
+      opacity: 1,
+    },
+  },
+  appbar: {
+    zIndex: theme.zIndex.modal + 1,
   },
 }));
 
@@ -173,7 +178,7 @@ const Header = () => {
       name: PageNames.SERVICES,
       route: Routes.SERVICES,
       activeIndex: 1,
-      onClick: (e) => menuHandleClick(e),
+      onMouseOver: (e) => menuHandleClick(e),
       aria_controls: 'services menu',
       aria_haspopup: anchorEl ? 'true' : undefined,
       aria_owns: anchorEl ? 'my menu' : undefined,
@@ -215,7 +220,8 @@ const Header = () => {
             label={obj.name}
             component={Link}
             to={obj.route}
-            onClick={obj.onClick}
+            onMouseOver={obj.onMouseOver}
+            onFocus={obj.onMouseOver}
             aria-controls={obj.aria_controls}
             aria-haspopup={obj.aria_haspopup}
             aria-owns={obj.aria_owns}
@@ -233,16 +239,19 @@ const Header = () => {
         open={openMenu}
         onClose={menuHandleClose}
         classes={{ paper: classes.menu }}
+        MenuListProps={{ onMouseLeave: menuHandleClose }}
         elevation={0}
+        style={{ zIndex: 1302 }}
       >
-        {ServicesMenu.map((obj, index) => (
+        {ServicesMenu.map((obj) => (
           <MenuItem
             key={obj.name}
-            onClick={(e) => menuHandleClose(e, index)}
+            onClick={(e) => menuHandleClose(e, obj.selectedIndex)}
+            onKeyUp={(e) => { if (e.keyCode === 13) { menuHandleClose(e, obj.selectedIndex); } }}
             component={Link}
             to={obj.route}
             classes={{ root: classes.menuItem }}
-            selected={index === selectedIndex}
+            selected={obj.selectedIndex === selectedIndex}
           >
             {obj.name}
           </MenuItem>
@@ -261,6 +270,7 @@ const Header = () => {
         open={openDrawer}
         classes={{ paper: classes.drawer }}
       >
+        <div className={classes.toolBarMargin} />
         <List disablePadding>
           {BaseMenu.map((obj) => (
             <ListItem
@@ -274,23 +284,25 @@ const Header = () => {
               button
               component={Link}
               to={obj.route}
+              classes={{ selected: classes.drawerSelectedItem }}
             >
               <ListItemText
                 disableTypography
-                className={value === obj.activeIndex
-                  ? [classes.drawerItem, classes.drawerSelectedItem] : classes.drawerItem}
+                className={classes.drawerItem}
                 primary={obj.name}
               />
             </ListItem>
           ))}
           <ListItem
-            onClick={() => setOpenDrawer(false)}
-            className={classes.drawerItemEstimate}
+            onClick={() => { setOpenDrawer(false); setValue(5); }}
+            classes={{ root: classes.drawerItemEstimate, selected: classes.drawerSelectedItem }}
             button
             component={Link}
             to={Routes.ESTIMATE}
+            selected={value === 5}
           >
             <ListItemText
+              className={classes.drawerItem}
               disableTypography
               primary={PageNames.ESTIMATE}
             />
@@ -309,7 +321,7 @@ const Header = () => {
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed">
+        <AppBar position="fixed" className={classes.appbar}>
           <Toolbar disableGutters>
             <Button
               component={Link}
