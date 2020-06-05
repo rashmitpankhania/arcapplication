@@ -17,6 +17,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
+import PropTypes from 'prop-types';
 import { PageNames, Routes } from '../Constants';
 import logo from '../../assets/logo.svg';
 
@@ -147,15 +148,16 @@ const ElevationScroll = (props) => {
   });
 };
 
-const Header = () => {
+const Header = (props) => {
+  const {
+    value, setValue, selectedIndex, setSelectedIndex,
+  } = props;
   const classes = useStyles();
   // noinspection JSUnresolvedVariable
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
-  const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openMenu, setOpenMenu] = React.useState(false);
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const theme = useTheme();
@@ -205,7 +207,7 @@ const Header = () => {
           break;
       }
     });
-  }, [value, ServicesMenu, BaseMenu, selectedIndex]);
+  }, [value, BaseMenu, selectedIndex, setValue, setSelectedIndex]);
 
   const tabView = (
     <>
@@ -343,3 +345,17 @@ const Header = () => {
   );
 };
 export default Header;
+
+Header.propTypes = {
+  value: PropTypes.number,
+  setValue: PropTypes.func,
+  selectedIndex: PropTypes.number,
+  setSelectedIndex: PropTypes.func,
+};
+
+Header.defaultProps = {
+  value: 0,
+  selectedIndex: 0,
+  setValue: undefined,
+  setSelectedIndex: undefined,
+};

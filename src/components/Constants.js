@@ -8,6 +8,11 @@ export const Routes = {
   ABOUT_US: '/about',
   CONTACT_US: '/contact',
   ESTIMATE: '/estimate',
+  VISION: '/vision',
+  TECHNOLOGY: '/technology',
+  PROCESS: '/process',
+  HISTORY: '/history',
+  TEAM: '/team',
 };
 
 export const PageNames = {
@@ -20,4 +25,15 @@ export const PageNames = {
   ABOUT_US: 'About Us',
   CONTACT_US: 'Contact Us',
   ESTIMATE: 'Free Estimate',
+  VISION: 'Vision',
+  TECHNOLOGY: 'Technology',
+  PROCESS: 'Process',
+  HISTORY: 'History',
+  TEAM: 'Team',
+};
+
+export const SocialMediaLinks = {
+  FACEBOOK: 'https://www.facebook.com',
+  TWITTER: 'https://www.twitter.com',
+  INSTAGRAM: 'https://www.instagram.com',
 };
