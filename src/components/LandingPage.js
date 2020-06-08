@@ -9,6 +9,8 @@ import { useTheme } from '@material-ui/core';
 
 import animationData from '../animations/landinganimation/data';
 import ButtonArrow from './ui/ButtonArrow';
+import customSoftware from '../assets/Custom Software Icon.svg';
+
 
 const useStyles = makeStyles((theme) => ({
   animation: {
@@ -34,17 +36,17 @@ const useStyles = makeStyles((theme) => ({
   buttonContainer: {
     marginTop: '1.25em',
   },
-  learnButton: {
-    borderColor: theme.palette.common.arcBlue,
-    color: theme.palette.common.arcBlue,
-    borderWidth: 2,
-    textTransform: 'none',
-    borderRadius: 50,
-    fontFamily: 'Roboto',
-    fontWeight: 'bold',
+  learnButtonHero: {
+    ...theme.learnButton,
     fontSize: '0.9rem',
     height: 40,
     width: 145,
+  },
+  learnButton: {
+    ...theme.learnButton,
+    fontSize: '0.7rem',
+    height: 35,
+    width: 140,
   },
   mainContainer: {
     marginTop: '5em',
@@ -61,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       marginLeft: 0,
     },
+  },
+  celebration: {
+    color: theme.palette.common.arcOrange,
+    fontFamily: 'Pacifico',
   },
 }));
 
@@ -83,7 +89,7 @@ const LandingPage = () => {
                 <Button className={classes.estimateButton} variant="contained">Free Estimate</Button>
               </Grid>
               <Grid item>
-                <Button variant="outlined" className={classes.learnButton}>
+                <Button variant="outlined" className={classes.learnButtonHero}>
                   <span style={{ marginRight: 10 }}>Learn More</span>
                   <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
                 </Button>
@@ -96,6 +102,35 @@ const LandingPage = () => {
               height="100%"
               width="100%"
             />
+          </Grid>
+        </Grid>
+      </Grid>
+
+      {/* Services Block */}
+      <Grid item>
+        <Grid container>
+          <Grid item>
+            <Typography variant="h4">
+              Custom Software Development
+            </Typography>
+            <Typography variant="subtitle1">
+              Save Energy.Save Time.Save Money
+            </Typography>
+            <Typography variant="subtitle1" style={{ marginTop: 15 }}>
+              Complete Digital Solution from investigation
+              {' '}
+              <br />
+              to
+              {' '}
+              <span className={classes.celebration}>celebration</span>
+            </Typography>
+            <Button variant="outlined" className={classes.learnButton}>
+              <span style={{ marginRight: 10 }}>Learn More</span>
+              <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
+            </Button>
+          </Grid>
+          <Grid item>
+            <img src={customSoftware} alt="custom software" />
           </Grid>
         </Grid>
       </Grid>
