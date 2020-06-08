@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core';
 
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import animationData from '../animations/landinganimation/data';
 import ButtonArrow from './ui/ButtonArrow';
 import customSoftware from '../assets/Custom Software Icon.svg';
@@ -73,6 +74,7 @@ const useStyles = makeStyles((theme) => ({
 const LandingPage = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Grid container direction="column" className={classes.mainContainer}>
       {/* Hero Block */}
@@ -108,15 +110,15 @@ const LandingPage = () => {
 
       {/* Services Block */}
       <Grid item>
-        <Grid container>
-          <Grid item>
+        <Grid container style={{ marginTop: '12em', padding: matchesSM ? '1em' : 0 }} justify={matchesSM ? 'center' : undefined}>
+          <Grid item style={{ marginLeft: matchesSM ? 0 : '5em', textAlign: matchesSM ? 'center' : undefined }}>
             <Typography variant="h4">
               Custom Software Development
             </Typography>
             <Typography variant="subtitle1">
               Save Energy.Save Time.Save Money
             </Typography>
-            <Typography variant="subtitle1" style={{ marginTop: 15 }}>
+            <Typography variant="subtitle1" style={{ marginTop: '1em' }}>
               Complete Digital Solution from investigation
               {' '}
               <br />
@@ -130,7 +132,7 @@ const LandingPage = () => {
             </Button>
           </Grid>
           <Grid item>
-            <img src={customSoftware} alt="custom software" />
+            <img src={customSoftware} alt="custom software" style={{ marginLeft: '2em', marginTop: matchesSM ? '1em' : undefined }} />
           </Grid>
         </Grid>
       </Grid>
