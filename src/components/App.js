@@ -8,6 +8,7 @@ import Header from './ui/Header';
 import theme from './ui/Theme';
 import { PageNames, Routes } from './Constants';
 import Footer from './ui/Footer';
+import LandingPage from './LandingPage';
 
 const App = () => {
   const [value, setValue] = React.useState(0);
@@ -23,7 +24,7 @@ const App = () => {
           setSelectedIndex={setSelectedIndex}
         />
         <Switch>
-          <Route exact path={Routes.HOME} component={() => <h1 style={{ height: '1000px' }}>{PageNames.HOME}</h1>} />
+          <Route exact path={Routes.HOME} component={LandingPage} />
           <Route exact path={Routes.SERVICES} component={() => <h1>{PageNames.SERVICES}</h1>} />
           <Route
             exact
