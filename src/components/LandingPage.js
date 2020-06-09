@@ -11,6 +11,10 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import animationData from '../animations/landinganimation/data';
 import ButtonArrow from './ui/ButtonArrow';
 import customSoftware from '../assets/Custom Software Icon.svg';
+import mobileApps from '../assets/mobileIcon.svg';
+import websites from '../assets/websiteIcon.svg';
+
+import { PageNames } from './Constants';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -65,10 +69,6 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: 0,
     },
   },
-  celebration: {
-    color: theme.palette.common.arcOrange,
-    fontFamily: 'Pacifico',
-  },
 }));
 
 const LandingPage = () => {
@@ -108,12 +108,12 @@ const LandingPage = () => {
         </Grid>
       </Grid>
 
-      {/* Services Block */}
+      {/* Custom Software Block */}
       <Grid item>
         <Grid container style={{ marginTop: '12em', padding: matchesSM ? '1em' : 0 }} justify={matchesSM ? 'center' : undefined}>
           <Grid item style={{ marginLeft: matchesSM ? 0 : '5em', textAlign: matchesSM ? 'center' : undefined }}>
             <Typography variant="h4">
-              Custom Software Development
+              {PageNames.CUSTOM_SOFTWARE}
             </Typography>
             <Typography variant="subtitle1">
               Save Energy.Save Time.Save Money
@@ -124,7 +124,9 @@ const LandingPage = () => {
               <br />
               to
               {' '}
-              <span className={classes.celebration}>celebration</span>
+              <span style={{ color: theme.palette.common.arcOrange, fontFamily: 'Pacifico' }}>
+                celebration
+              </span>
             </Typography>
             <Button variant="outlined" className={classes.learnButton}>
               <span style={{ marginRight: 10 }}>Learn More</span>
@@ -133,6 +135,56 @@ const LandingPage = () => {
           </Grid>
           <Grid item>
             <img src={customSoftware} alt="custom software" style={{ marginLeft: '2em', marginTop: matchesSM ? '1em' : undefined }} />
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* Mobile Apps Block */}
+      <Grid item>
+        <Grid container style={{ marginTop: '12em', padding: matchesSM ? '1em' : 0 }} justify={matchesSM ? 'center' : 'flex-end'}>
+          <Grid item style={{ textAlign: matchesSM ? 'center' : undefined }}>
+            <Typography variant="h4">
+              {PageNames.MOBILE_APPS}
+            </Typography>
+            <Typography variant="subtitle1">
+              Extend Functionality. Extend Access. Increase Engagement.
+            </Typography>
+            <Typography variant="subtitle1" style={{ marginTop: '1em' }}>
+              Integrate your web experience or create a standalone app
+              <br />
+              with either mobile platform.
+            </Typography>
+            <Button variant="outlined" className={classes.learnButton}>
+              <span style={{ marginRight: 10 }}>Learn More</span>
+              <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
+            </Button>
+          </Grid>
+          <Grid item style={{ marginRight: matchesSM ? 0 : '5em' }}>
+            <img src={mobileApps} alt="mobile apps" style={{ marginTop: matchesSM ? '1em' : undefined }} />
+          </Grid>
+        </Grid>
+      </Grid>
+      {/* Websites Block */}
+      <Grid item>
+        <Grid container style={{ marginTop: '12em', padding: matchesSM ? '1em' : 0 }} justify={matchesSM ? 'center' : undefined}>
+          <Grid item style={{ marginLeft: matchesSM ? 0 : '5em', textAlign: matchesSM ? 'center' : undefined }}>
+            <Typography variant="h4">
+              {PageNames.WEBSITES}
+            </Typography>
+            <Typography variant="subtitle1">
+              Reach more. Discover more. Sell more.
+            </Typography>
+            <Typography variant="subtitle1" style={{ marginTop: '1em' }}>
+              Optimized for search engines
+              <br />
+              built for speed.
+            </Typography>
+            <Button variant="outlined" className={classes.learnButton}>
+              <span style={{ marginRight: 10 }}>Learn More</span>
+              <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
+            </Button>
+          </Grid>
+          <Grid item>
+            <img src={websites} alt="websites" style={{ marginLeft: matchesSM ? 0 : '2em', marginTop: matchesSM ? '1em' : undefined }} />
           </Grid>
         </Grid>
       </Grid>

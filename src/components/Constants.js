@@ -18,9 +18,9 @@ export const Routes = {
 export const PageNames = {
   HOME: 'Home',
   SERVICES: 'Services',
-  CUSTOM_SOFTWARE: 'Custom Software',
-  MOBILE_APPS: 'Mobile Apps',
-  WEBSITES: 'Websites',
+  CUSTOM_SOFTWARE: 'Custom Software Development',
+  MOBILE_APPS: 'iOS/Android Development',
+  WEBSITES: 'Website Development',
   REVOLUTION: 'Revolution',
   ABOUT_US: 'About Us',
   CONTACT_US: 'Contact Us',

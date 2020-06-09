@@ -42,7 +42,6 @@ const theme = createMuiTheme({
     },
     subtitle1: {
       color: `${arcGray}`,
-      fontFamily: 'Pacifico',
     },
   },
   learnButton: {
