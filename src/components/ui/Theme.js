@@ -34,14 +34,19 @@ const theme = createMuiTheme({
       fontFamily: 'Raleway',
       fontSize: '2.5rem',
       fontWeight: 700,
-      color: `${arcBlue}`,
+      color: arcBlue,
       lineHeight: 1.5,
     },
+    h3: {
+      fontFamily: 'Pacifico',
+      color: arcBlue,
+      fontSize: '2em',
+    },
     h4: {
-      color: `${arcBlue}`,
+      color: arcBlue,
     },
     subtitle1: {
-      color: `${arcGray}`,
+      color: arcGray,
     },
   },
   learnButton: {

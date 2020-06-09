@@ -8,11 +8,14 @@ import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core';
 
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import animationData from '../animations/landinganimation/data';
 import ButtonArrow from './ui/ButtonArrow';
 import customSoftware from '../assets/Custom Software Icon.svg';
 import mobileApps from '../assets/mobileIcon.svg';
 import websites from '../assets/websiteIcon.svg';
+import revolutionBackground from '../assets/repeatingBackground.svg';
 
 import { PageNames } from './Constants';
 
@@ -69,6 +72,25 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: 0,
     },
   },
+  revolutionCard: {
+    boxShadow: theme.shadows[10],
+    position: 'absolute',
+    padding: '6em',
+    paddingTop: '3em',
+    paddingBottom: '3em',
+    borderRadius: 15,
+    [theme.breakpoints.down('sm')]: {
+      borderRadius: 0,
+    },
+  },
+  revolutionImgContainer: {
+    backgroundImage: `url(${revolutionBackground})`,
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    height: '100%',
+    width: '100%',
+  },
 }));
 
 const LandingPage = () => {
@@ -77,6 +99,7 @@ const LandingPage = () => {
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Grid container direction="column" className={classes.mainContainer}>
+
       {/* Hero Block */}
       <Grid item>
         <Grid container justify="flex-end" alignItems="center">
@@ -138,6 +161,7 @@ const LandingPage = () => {
           </Grid>
         </Grid>
       </Grid>
+
       {/* Mobile Apps Block */}
       <Grid item>
         <Grid container style={{ marginTop: '12em', padding: matchesSM ? '1em' : 0 }} justify={matchesSM ? 'center' : 'flex-end'}>
@@ -163,6 +187,7 @@ const LandingPage = () => {
           </Grid>
         </Grid>
       </Grid>
+
       {/* Websites Block */}
       <Grid item>
         <Grid container style={{ marginTop: '12em', padding: matchesSM ? '1em' : 0 }} justify={matchesSM ? 'center' : undefined}>
@@ -186,6 +211,33 @@ const LandingPage = () => {
           <Grid item>
             <img src={websites} alt="websites" style={{ marginLeft: matchesSM ? 0 : '2em', marginTop: matchesSM ? '1em' : undefined }} />
           </Grid>
+        </Grid>
+      </Grid>
+
+      {/* Revolution Block */}
+      <Grid item>
+        <Grid container justify="center" alignItems="center" style={{ height: '50em', marginTop: '12em' }}>
+          <Card className={classes.revolutionCard}>
+            <CardContent>
+              <Grid container direction="column">
+                <Grid item style={{ textAlign: 'center' }}>
+                  <Typography variant="h3" gutterBottom>The Revolution</Typography>
+                </Grid>
+                <Grid item style={{ textAlign: 'center' }}>
+                  <Typography variant="subtitle1">
+                    Visionary insights coupled with cutting-edge technology is a
+                    <br />
+                    recipe for revolution
+                  </Typography>
+                  <Button variant="outlined" className={classes.learnButton}>
+                    <span style={{ marginRight: 10 }}>Learn More</span>
+                    <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
+                  </Button>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+          <div className={classes.revolutionImgContainer} />
         </Grid>
       </Grid>
     </Grid>
