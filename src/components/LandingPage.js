@@ -269,7 +269,7 @@ const LandingPage = () => {
       <Grid item>
         <Grid container style={{ height: '50em' }} alignItems="center">
           <Grid item container className={classes.infoContainer} direction={matchesXS ? 'column' : 'row'} spacing={matchesXS ? 10 : 0}>
-            <Grid item sm style={{ marginLeft: margin, textAlign: matchesSM ? 'center' : 'left' }}>
+            <Grid item sm style={{ marginLeft: margin, textAlign: matchesXS ? 'center' : 'left' }}>
               <Grid container direction="column">
                 <Grid item>
                   <Typography variant="h4" style={{ color: 'white' }}>About Us</Typography>
