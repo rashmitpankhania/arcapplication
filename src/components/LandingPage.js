@@ -6,17 +6,17 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core';
-
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+
 import animationData from '../animations/landinganimation/data';
 import ButtonArrow from './ui/ButtonArrow';
 import customSoftware from '../assets/Custom Software Icon.svg';
 import mobileApps from '../assets/mobileIcon.svg';
 import websites from '../assets/websiteIcon.svg';
 import revolutionBackground from '../assets/repeatingBackground.svg';
-
+import infoBackground from '../assets/infoBackground.svg';
 import { PageNames } from './Constants';
 
 
@@ -91,12 +91,36 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     width: '100%',
   },
+  infoContainer: {
+    position: 'absolute',
+    textAlign: 'inherit',
+    // [(theme.breakpoints.down('xs'))]: {
+    //   textAlign: 'center',
+    // },
+  },
+  infoImgBackground: {
+    backgroundImage: `url(${infoBackground})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '100%',
+    width: '100%',
+    backgroundRepeat: 'no-repeat',
+  },
 }));
 
 const LandingPage = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesXS = useMediaQuery(theme.breakpoints.down('xs'));
+  let margin;
+  if (matchesXS) {
+    margin = 0;
+  } else if (matchesSM) {
+    margin = '2em';
+  } else {
+    margin = '53m';
+  }
   return (
     <Grid container direction="column" className={classes.mainContainer}>
 
@@ -238,6 +262,43 @@ const LandingPage = () => {
             </CardContent>
           </Card>
           <div className={classes.revolutionImgContainer} />
+        </Grid>
+      </Grid>
+
+      {/* Info Block */}
+      <Grid item>
+        <Grid container style={{ height: '50em' }} alignItems="center">
+          <Grid item container className={classes.infoContainer} direction={matchesXS ? 'column' : 'row'} spacing={matchesXS ? 10 : 0}>
+            <Grid item sm style={{ marginLeft: margin, textAlign: matchesSM ? 'center' : 'left' }}>
+              <Grid container direction="column">
+                <Grid item>
+                  <Typography variant="h4" style={{ color: 'white' }}>About Us</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle1" style={{ color: 'white' }}>Let&apos;s get personal.</Typography>
+                  <Button variant="outlined" className={classes.learnButton} style={{ borderColor: 'white', color: 'white' }}>
+                    <span style={{ marginRight: 10 }}>Learn More</span>
+                    <ButtonArrow width={15} height={15} fill="white" />
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item sm style={{ marginRight: margin, textAlign: matchesXS ? 'center' : 'right' }}>
+              <Grid container direction="column">
+                <Grid item>
+                  <Typography variant="h4" style={{ color: 'white' }}>Contact Us</Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="subtitle1" style={{ color: 'white' }}>Say hello!!</Typography>
+                  <Button variant="outlined" className={classes.learnButton} style={{ borderColor: 'white', color: 'white' }}>
+                    <span style={{ marginRight: 10 }}>Learn More</span>
+                    <ButtonArrow width={15} height={15} fill="white" />
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          <div className={classes.infoImgBackground} />
         </Grid>
       </Grid>
     </Grid>
