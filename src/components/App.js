@@ -24,7 +24,16 @@ const App = () => {
           setSelectedIndex={setSelectedIndex}
         />
         <Switch>
-          <Route exact path={Routes.HOME} component={LandingPage} />
+          <Route
+            exact
+            path={Routes.HOME}
+            render={() => (
+              <LandingPage
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
+          />
           <Route exact path={Routes.SERVICES} component={() => <h1>{PageNames.SERVICES}</h1>} />
           <Route
             exact

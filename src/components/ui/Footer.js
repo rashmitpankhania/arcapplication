@@ -179,11 +179,6 @@ const Footer = (props) => {
 export default Footer;
 
 Footer.propTypes = {
-  setValue: PropTypes.func,
-  setSelectedIndex: PropTypes.func,
-};
-
-Footer.defaultProps = {
-  setValue: undefined,
-  setSelectedIndex: undefined,
+  setValue: PropTypes.func.isRequired,
+  setSelectedIndex: PropTypes.func.isRequired,
 };

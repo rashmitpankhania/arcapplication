@@ -205,6 +205,9 @@ const Header = (props) => {
             }
           }
           break;
+        case Routes.ESTIMATE:
+          setValue(5);
+          break;
         default:
           break;
       }
@@ -234,7 +237,7 @@ const Header = (props) => {
           />
         ))}
       </Tabs>
-      <Button variant="contained" component={Link} to={Routes.ESTIMATE} color="secondary" className={classes.button}>
+      <Button variant="contained" onClick={() => setValue(5)} component={Link} to={Routes.ESTIMATE} color="secondary" className={classes.button}>
         Free
         Estimate
       </Button>

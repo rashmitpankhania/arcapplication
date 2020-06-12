@@ -7,10 +7,12 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
 
 import { useMediaQuery } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { Routes } from '../Constants';
 import ButtonArrow from './ButtonArrow';
 import callToActionBackground from '../../assets/background.jpg';
 import mobileBackground from '../../assets/mobileBackground.jpg';
+import Footer from './Footer';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -42,10 +44,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CallToAction = () => {
+const CallToAction = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const { setValue } = props;
   return (
     <Grid container className={classes.mainContainer} justify={matchesSM ? 'space-evenly' : 'space-between'} alignItems="center" direction={matchesSM ? 'column' : 'row'}>
       <Grid item style={{ marginLeft: matchesSM ? 0 : '5em' }}>
@@ -63,7 +66,7 @@ const CallToAction = () => {
             21st Century.
           </Typography>
           <Grid item>
-            <Button variant="outlined" className={classes.learnButton}>
+            <Button onClick={() => setValue(2)} component={Link} to={Routes.REVOLUTION} variant="outlined" className={classes.learnButton}>
               <span style={{ marginRight: 10 }}>Learn More</span>
               <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
             </Button>
@@ -71,7 +74,7 @@ const CallToAction = () => {
         </Grid>
       </Grid>
       <Grid item style={{ marginRight: matchesSM ? 0 : '5em', textAlign: matchesSM ? 'center' : 'inherit' }}>
-        <Button disableElevation variant="contained" component={Link} to={Routes.ESTIMATE} color="secondary" className={classes.button}>
+        <Button onClick={() => setValue(5)} disableElevation variant="contained" component={Link} to={Routes.ESTIMATE} color="secondary" className={classes.button}>
           Free
           Estimate
         </Button>
@@ -81,3 +84,6 @@ const CallToAction = () => {
 };
 
 export default CallToAction;
+CallToAction.propTypes = {
+  setValue: PropTypes.func.isRequired,
+};
