@@ -18,6 +18,7 @@ import websites from '../assets/websiteIcon.svg';
 import revolutionBackground from '../assets/repeatingBackground.svg';
 import infoBackground from '../assets/infoBackground.svg';
 import { PageNames } from './Constants';
+import CallToAction from './ui/CallToAction';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -119,7 +120,7 @@ const LandingPage = () => {
   } else if (matchesSM) {
     margin = '2em';
   } else {
-    margin = '53m';
+    margin = '5em';
   }
   return (
     <Grid container direction="column" className={classes.mainContainer}>
@@ -232,8 +233,8 @@ const LandingPage = () => {
               <ButtonArrow width={15} height={15} fill={theme.palette.common.arcBlue} />
             </Button>
           </Grid>
-          <Grid item>
-            <img src={websites} alt="websites" style={{ marginLeft: matchesSM ? 0 : '2em', marginTop: matchesSM ? '1em' : undefined }} />
+          <Grid item style={{ marginRight: matchesSM ? 0 : '5em' }}>
+            <img src={websites} alt="websites" style={{ marginLeft: '2em', marginTop: matchesSM ? '1em' : undefined }} />
           </Grid>
         </Grid>
       </Grid>
@@ -300,6 +301,11 @@ const LandingPage = () => {
           </Grid>
           <div className={classes.infoImgBackground} />
         </Grid>
+      </Grid>
+
+      {/* Call to Action Block */}
+      <Grid item>
+        <CallToAction />
       </Grid>
     </Grid>
   );
