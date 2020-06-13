@@ -12,7 +12,6 @@ import { Routes } from '../Constants';
 import ButtonArrow from './ButtonArrow';
 import callToActionBackground from '../../assets/background.jpg';
 import mobileBackground from '../../assets/mobileBackground.jpg';
-import Footer from './Footer';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {

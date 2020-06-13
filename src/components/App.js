@@ -9,6 +9,7 @@ import theme from './ui/Theme';
 import { PageNames, Routes } from './Constants';
 import Footer from './ui/Footer';
 import LandingPage from './LandingPage';
+import ServicesPage from './ServicesPage';
 
 const App = () => {
   const [value, setValue] = React.useState(0);
@@ -34,7 +35,16 @@ const App = () => {
               />
             )}
           />
-          <Route exact path={Routes.SERVICES} component={() => <h1>{PageNames.SERVICES}</h1>} />
+          <Route
+            exact
+            path={Routes.SERVICES}
+            render={() => (
+              <ServicesPage
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
+          />
           <Route
             exact
             path={Routes.MOBILE_APPS}
