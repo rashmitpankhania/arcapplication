@@ -13,8 +13,8 @@ const ServicesPage = (props) => {
   const { setValue, setSelectedIndex } = props;
   return (
     <Grid container direction="column" alignItems={matchesSM ? 'center' : undefined}>
-      <Grid item style={{ marginLeft: matchesSM ? 0 : '5em', position: 'absolute' }}>
-        <Typography style={{ color: theme.palette.common.arcBlue, fontSize: '5em', fontFamily: 'Raleway' }}>Services</Typography>
+      <Grid item style={{ marginLeft: matchesSM ? 0 : '5em', position: 'absolute', marginTop: matchesSM ? '1em' : '2em' }}>
+        <Typography variant="h2">Services</Typography>
       </Grid>
       <Services setValue={setValue} setSelectedIndex={setSelectedIndex} />
     </Grid>

@@ -71,7 +71,7 @@ const Services = (props) => {
             <img
               src={customSoftware}
               alt="custom software"
-              style={{ marginLeft: '2em', marginTop: matchesSM ? '1em' : undefined }}
+              style={{ marginLeft: matchesSM ? 0 : '2em', marginTop: matchesSM ? '1em' : undefined }}
             />
           </Grid>
         </Grid>
@@ -81,7 +81,7 @@ const Services = (props) => {
       <Grid item>
         <Grid
           container
-          style={{ marginTop: '12em', padding: matchesSM ? '1em' : 0 }}
+          style={{ marginTop: '12em', padding: matchesSM ? 0 : '1em' }}
           justify={matchesSM ? 'center' : 'flex-end'}
         >
           <Grid item style={{ textAlign: matchesSM ? 'center' : undefined }}>
@@ -150,7 +150,7 @@ const Services = (props) => {
             <img
               src={websites}
               alt="websites"
-              style={{ marginLeft: '2em', marginTop: matchesSM ? '1em' : undefined }}
+              style={{ marginLeft: matchesSM ? 0 : '2em', marginTop: matchesSM ? '1em' : undefined }}
             />
           </Grid>
         </Grid>
