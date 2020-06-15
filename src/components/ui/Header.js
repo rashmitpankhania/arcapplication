@@ -212,7 +212,7 @@ const Header = (props) => {
           break;
       }
     });
-  }, [value, BaseMenu, selectedIndex, setValue, setSelectedIndex]);
+  }, [value, BaseMenu, selectedIndex, setValue, setSelectedIndex, props]);
 
   const tabView = (
     <>
@@ -246,9 +246,9 @@ const Header = (props) => {
         anchorEl={anchorEl}
         keepMounted
         open={openMenu}
-        onClose={menuHandleClose}
+        onClose={() => { setAnchorEl(null); setOpenMenu(false); }}
         classes={{ paper: classes.menu }}
-        MenuListProps={{ onMouseLeave: menuHandleClose }}
+        MenuListProps={{ onMouseLeave: () => { setAnchorEl(null); setOpenMenu(false); } }}
         elevation={0}
         style={{ zIndex: 1302 }}
       >
@@ -352,15 +352,8 @@ const Header = (props) => {
 export default Header;
 
 Header.propTypes = {
-  value: PropTypes.number,
-  setValue: PropTypes.func,
-  selectedIndex: PropTypes.number,
-  setSelectedIndex: PropTypes.func,
-};
-
-Header.defaultProps = {
-  value: 0,
-  selectedIndex: 0,
-  setValue: undefined,
-  setSelectedIndex: undefined,
+  value: PropTypes.number.isRequired,
+  setValue: PropTypes.func.isRequired,
+  selectedIndex: PropTypes.number.isRequired,
+  setSelectedIndex: PropTypes.func.isRequired,
 };
