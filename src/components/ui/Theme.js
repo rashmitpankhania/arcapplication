@@ -23,6 +23,7 @@ const theme = createMuiTheme({
       textTransform: 'none',
       fontWeight: 700,
       fontSize: '1rem',
+      color: 'white',
     },
     estimate: {
       fontFamily: 'Pacifico',
@@ -47,6 +48,12 @@ const theme = createMuiTheme({
     },
     subtitle1: {
       color: arcGray,
+    },
+    body1: {
+      fontSize: '1 rem',
+      fontFamily: 'Raleway',
+      color: arcGray,
+      lineHeight: 1.25,
     },
   },
   learnButton: {

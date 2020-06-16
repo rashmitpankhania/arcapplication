@@ -10,6 +10,7 @@ import { PageNames, Routes } from './Constants';
 import Footer from './ui/Footer';
 import LandingPage from './LandingPage';
 import ServicesPage from './ServicesPage';
+import CustomSoftwarePage from './CustomSoftwarePage';
 
 const App = () => {
   const [value, setValue] = React.useState(0);
@@ -53,7 +54,7 @@ const App = () => {
           <Route
             exact
             path={Routes.CUSTOM_SOFTWARE}
-            component={() => <h1>{PageNames.CUSTOM_SOFTWARE}</h1>}
+            render={() => <CustomSoftwarePage setSelectedIndex={setSelectedIndex} />}
           />
           <Route exact path={Routes.ESTIMATE} component={() => <h1>{PageNames.ESTIMATE}</h1>} />
           <Route exact path={Routes.REVOLUTION} component={() => <h1>{PageNames.REVOLUTION}</h1>} />
