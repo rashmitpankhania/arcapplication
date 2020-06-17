@@ -105,7 +105,7 @@ const CustomSoftwarePage = (props) => {
       </Grid>
 
       {/* Animation row 1 */}
-      <Grid item container direction="row">
+      <Grid item container direction="row" justify="space-between">
         <Grid item container direction="row" md>
           <Grid item container direction="column" md style={{ maxWidth: '25em' }}>
             <Grid item>
@@ -154,6 +154,20 @@ const CustomSoftwarePage = (props) => {
         </Grid>
       </Grid>
 
+      {/* Root cause */}
+      <Grid item container direction="column" alignItems="center" style={{ marginTop: '10em', marginBottom: '20em' }}>
+        <Grid item>
+          <img src={rootImg} alt="tree root" style={{ width: '25em', height: '30em' }} />
+        </Grid>
+        <Grid item style={{maxWidth: '20em'}}>
+          <Typography align="center" variant="h4">Root-cause Analysis</Typography>
+          <Typography align="center" variant="body1" paragraph>Many problems are merely symptoms of larger, underlying issues.</Typography>
+          <Typography align="center" variant="body1" paragraph>
+            We can help you thoroughly examine all areas of your business
+            to develop a holistic plan for the most effective implementation of technology.
+          </Typography>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };
