@@ -54,7 +54,12 @@ const App = () => {
           <Route
             exact
             path={Routes.CUSTOM_SOFTWARE}
-            render={() => <CustomSoftwarePage setSelectedIndex={setSelectedIndex} />}
+            render={() => (
+              <CustomSoftwarePage
+                setSelectedIndex={setSelectedIndex}
+                setValue={setValue}
+              />
+            )}
           />
           <Route exact path={Routes.ESTIMATE} component={() => <h1>{PageNames.ESTIMATE}</h1>} />
           <Route exact path={Routes.REVOLUTION} component={() => <h1>{PageNames.REVOLUTION}</h1>} />

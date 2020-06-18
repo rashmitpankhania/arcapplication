@@ -257,7 +257,7 @@ const LandingPage = (props) => {
 
       {/* Call to Action Block */}
       <Grid item>
-        <CallToAction setValue={setValue} />
+        <CallToAction setValue={setValue} setSelectedIndex={setSelectedIndex} />
       </Grid>
     </Grid>
   );
