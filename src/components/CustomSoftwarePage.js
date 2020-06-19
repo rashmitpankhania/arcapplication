@@ -27,9 +27,10 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: '10em',
     paddingTop: '2em',
     paddingLeft: '5em',
-    [(theme.breakpoints.down('md'))]: {
-      paddingRight: '2em',
-      paddingLeft: '2em',
+    [(theme.breakpoints.down('sm'))]: {
+      paddingRight: '1.5em',
+      paddingLeft: '1.5em',
+      paddingTop: '1em',
     },
   },
 }));
@@ -45,6 +46,7 @@ const CustomSoftwarePage = (props) => {
   const theme = useTheme();
   const classes = useStyles();
   const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <>
       <Grid container direction="column" className={classes.mainContainer}>
@@ -113,7 +115,7 @@ const CustomSoftwarePage = (props) => {
         {/* Animation row 1 */}
         <Grid item container direction={matchesMD ? 'column' : 'row'} justify="space-between">
           <Grid item container direction="row" md style={{ marginBottom: matchesMD ? '2em' : 0 }} justify={matchesMD ? 'center' : undefined}>
-            <Grid item container direction="column" md style={{ maxWidth: '25em', textAlign: matchesMD ? 'center' : 'inherit' }}>
+            <Grid item container direction="column" md style={{ maxWidth: '25em', textAlign: matchesSM ? 'center' : 'inherit' }}>
               <Grid item>
                 <Typography variant="h4">Digital Documents & Data</Typography>
               </Grid>
@@ -152,7 +154,7 @@ const CustomSoftwarePage = (props) => {
             >
               <Lottie config={{ loop: true, autoplay: false, animationData: scaleAnimationData }} />
             </Grid>
-            <Grid item container direction="column" style={{ maxWidth: '20em', textAlign: matchesMD ? 'center' : 'right', marginTop: matchesMD ? '3em' : 0 }}>
+            <Grid item container direction="column" style={{ maxWidth: '20em', textAlign: matchesSM ? 'center' : 'right', marginTop: matchesMD ? '3em' : 0 }}>
               <Grid item>
                 <Typography variant="h4">Scale</Typography>
               </Grid>
@@ -169,7 +171,7 @@ const CustomSoftwarePage = (props) => {
         {/* Root cause */}
         <Grid item container direction="column" alignItems="center" style={{ marginTop: '10em', marginBottom: '10em' }}>
           <Grid item>
-            <img src={rootImg} alt="tree root" height="450em" width="450" />
+            <img src={rootImg} alt="tree root" height={matchesSM ? '300em' : '450em'} width={matchesSM ? '300em' : '400em'} />
           </Grid>
           <Grid item style={{ maxWidth: '20em' }}>
             <Typography align="center" variant="h4" gutterBottom>Root-cause Analysis</Typography>
@@ -183,8 +185,8 @@ const CustomSoftwarePage = (props) => {
 
         {/* Animation row 2 */}
         <Grid item container direction={matchesMD ? 'column' : 'row'} justify="space-between">
-          <Grid item container direction="row" md style={{ marginBottom: matchesMD ? '2em' : 0 }}>
-            <Grid item container direction="column" md style={{ maxWidth: '14em' }}>
+          <Grid item container direction="row" md style={{ marginBottom: matchesMD ? '6em' : 0 }} justify={matchesMD ? 'center' : undefined}>
+            <Grid item container direction="column" md style={{ maxWidth: '14em', textAlign: matchesSM ? 'center' : 'inherit' }}>
               <Grid item>
                 <Typography variant="h4">Automation</Typography>
               </Grid>
@@ -206,12 +208,12 @@ const CustomSoftwarePage = (props) => {
               <Lottie config={{ loop: true, autoplay: true, animationData: wheelAnimationData }} />
             </Grid>
           </Grid>
-          <Grid item container direction="row" md justify="flex-end">
+          <Grid item container direction="row" md justify={matchesMD ? 'center' : 'flex-end'}>
             <Grid
               item
               md
               style={{
-                maxWidth: '12em', maxHeight: '20em', minHeight: 150, minWidth: 100,
+                maxWidth: '12em', maxHeight: '20em', minHeight: 150, minWidth: 100, marginBottom: matchesMD ? '3em' : 0,
               }}
             >
               <Lottie config={{
@@ -221,7 +223,7 @@ const CustomSoftwarePage = (props) => {
               }}
               />
             </Grid>
-            <Grid item container direction="column" style={{ maxWidth: '17em', textAlign: 'right' }}>
+            <Grid item container direction="column" style={{ maxWidth: '17em', textAlign: matchesSM ? 'center' : 'right' }}>
               <Grid item>
                 <Typography variant="h4">User Experience Design</Typography>
               </Grid>
