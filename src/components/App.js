@@ -11,6 +11,7 @@ import Footer from './ui/Footer';
 import LandingPage from './LandingPage';
 import ServicesPage from './ServicesPage';
 import CustomSoftwarePage from './CustomSoftwarePage';
+import MobileAppsPage from './MobileAppsPage';
 
 const App = () => {
   const [value, setValue] = React.useState(0);
@@ -49,7 +50,12 @@ const App = () => {
           <Route
             exact
             path={Routes.MOBILE_APPS}
-            component={() => <h1>{PageNames.MOBILE_APPS}</h1>}
+            render={() => (
+              <MobileAppsPage
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            )}
           />
           <Route
             exact
