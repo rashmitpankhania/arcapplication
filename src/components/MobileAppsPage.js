@@ -7,11 +7,12 @@ import { Link } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useTheme from '@material-ui/core/styles/useTheme';
 import PropTypes from 'prop-types';
+import { Lottie } from '@crello/react-lottie';
 import { Routes } from './Constants';
 import backArrow from '../assets/backArrow.svg';
 import forwardArrow from '../assets/forwardArrow.svg';
 import CallToAction from './ui/CallToAction';
-import rootImg from '../assets/root.svg';
+import mobileAnimationData from '../animations/integrationAnimation/data.json';
 import extendAccessImg from '../assets/extendAccess.svg';
 import increaseEngImg from '../assets/increaseEngagement.svg';
 import extendFuncImg from '../assets/swissKnife.svg';
@@ -89,7 +90,7 @@ const MobileAppsPage = (props) => {
         </Grid>
 
         {/* Second Mobile Row - 2 */}
-        <Grid item container justify="center" style={{ marginTop: '3em' }}>
+        <Grid item container justify="center" style={{ marginTop: '5em' }}>
           <Grid item style={{ textAlign: matchesSM ? 'center' : 'inherit' }} md={3}>
             <Typography variant="h4" paragraph>
               Integration
@@ -104,7 +105,11 @@ const MobileAppsPage = (props) => {
             </Typography>
           </Grid>
           <Grid item container md={6} justify="center" style={{ marginTop: matchesSM ? '3em' : 0, marginBottom: matchesSM ? '3em' : 0 }}>
-            <img src={rootImg} alt="tree root" height={matchesSM ? '300em' : '450em'} width={matchesSM ? '300em' : '400em'} />
+            <Lottie
+              config={{ loop: true, autoplay: true, animationData: mobileAnimationData }}
+              height="20em"
+              width="20em"
+            />
           </Grid>
           <Grid item style={{ textAlign: matchesSM ? 'center' : 'right' }} md={3}>
             <Typography variant="h4" paragraph>
@@ -126,7 +131,7 @@ const MobileAppsPage = (props) => {
           {MiddleIcons.map((obj) => (
             <Grid key={obj.text} item container direction="column" md style={{ maxWidth: '40em', marginTop: matchesMD ? '4em' : 0 }} alignItems="center">
               <Grid item>
-                <Typography align="center" variant="h5" style={{ color: theme.palette.common.arcBlue }}>{obj.text}</Typography>
+                <Typography align="center" variant="h5" style={{ color: theme.palette.common.arcBlue }} gutterBottom>{obj.text}</Typography>
               </Grid>
               <Grid item style={{ marginTop: '1em' }}>
                 <img src={obj.img} alt={obj.text} height="150em" width={obj.text === 'Extend Access' ? '100%' : '150em'} />
