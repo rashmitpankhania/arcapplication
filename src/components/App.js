@@ -12,6 +12,7 @@ import LandingPage from './LandingPage';
 import ServicesPage from './ServicesPage';
 import CustomSoftwarePage from './CustomSoftwarePage';
 import MobileAppsPage from './MobileAppsPage';
+import WebsitePage from './WebsitePage';
 
 const App = () => {
   const [value, setValue] = React.useState(0);
@@ -71,7 +72,16 @@ const App = () => {
           <Route exact path={Routes.REVOLUTION} component={() => <h1>{PageNames.REVOLUTION}</h1>} />
           <Route exact path={Routes.ABOUT_US} component={() => <h1>{PageNames.ABOUT_US}</h1>} />
           <Route exact path={Routes.CONTACT_US} component={() => <h1>{PageNames.CONTACT_US}</h1>} />
-          <Route exact path={Routes.WEBSITES} component={() => <h1>{PageNames.WEBSITES}</h1>} />
+          <Route
+            exact
+            path={Routes.WEBSITES}
+            render={() => (
+              <WebsitePage
+                setSelectedIndex={setSelectedIndex}
+                setValue={setValue}
+              />
+            )}
+          />
         </Switch>
         <Footer
           setValue={setValue}

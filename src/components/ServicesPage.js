@@ -12,7 +12,7 @@ const ServicesPage = (props) => {
   const matchesSM = useMediaQuery((theme.breakpoints.down('sm')));
   const { setValue, setSelectedIndex } = props;
   return (
-    <Grid container direction="column" alignItems={matchesSM ? 'center' : undefined}>
+    <Grid container direction="column" alignItems={matchesSM ? 'center' : undefined} style={{ paddingBottom: '5em' }}>
       <Grid item style={{ marginLeft: matchesSM ? 0 : '5em', position: 'absolute', marginTop: matchesSM ? '1em' : '2em' }}>
         <Typography variant="h2">Services</Typography>
       </Grid>
