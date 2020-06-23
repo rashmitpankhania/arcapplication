@@ -123,6 +123,7 @@ const WebsitePage = (props) => {
             style={{ marginTop: '12em' }}
             justify={matchesSM ? 'center' : obj.justify}
             alignItems="center"
+            direction={matchesSM ? 'column' : 'row'}
           >
             <Grid item>
               <Grid container direction="column" alignItems={matchesSM ? 'center' : undefined}>
