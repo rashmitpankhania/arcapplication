@@ -8,11 +8,11 @@ import Header from './ui/Header';
 import theme from './ui/Theme';
 import { PageNames, Routes } from './Constants';
 import Footer from './ui/Footer';
-import LandingPage from './LandingPage';
-import ServicesPage from './ServicesPage';
-import CustomSoftwarePage from './CustomSoftwarePage';
-import MobileAppsPage from './MobileAppsPage';
-import WebsitePage from './WebsitePage';
+import LandingPage from './pages/LandingPage';
+import ServicesPage from './pages/ServicesPage';
+import CustomSoftwarePage from './pages/CustomSoftwarePage';
+import MobileAppsPage from './pages/MobileAppsPage';
+import WebsitePage from './pages/WebsitePage';
 
 const App = () => {
   const [value, setValue] = React.useState(0);

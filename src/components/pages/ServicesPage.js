@@ -5,7 +5,7 @@ import React from 'react';
 
 import useTheme from '@material-ui/core/styles/useTheme';
 import { useMediaQuery } from '@material-ui/core';
-import Services from './ui/Services';
+import Services from '../ui/Services';
 
 const ServicesPage = (props) => {
   const theme = useTheme();

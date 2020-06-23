@@ -7,14 +7,14 @@ import {
   Hidden, IconButton, makeStyles, Typography,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import CallToAction from './ui/CallToAction';
-import { Routes } from './Constants';
-import backArrow from '../assets/backArrow.svg';
-import forwardArrow from '../assets/forwardArrow.svg';
-import analyticsImg from '../assets/analytics.svg';
-import ecommerceImg from '../assets/ecommerce.svg';
-import outreachImg from '../assets/outreach.svg';
-import seoImg from '../assets/seo.svg';
+import CallToAction from '../ui/CallToAction';
+import { Routes } from '../Constants';
+import backArrow from '../../assets/backArrow.svg';
+import forwardArrow from '../../assets/forwardArrow.svg';
+import analyticsImg from '../../assets/analytics.svg';
+import ecommerceImg from '../../assets/ecommerce.svg';
+import outreachImg from '../../assets/outreach.svg';
+import seoImg from '../../assets/seo.svg';
 
 const rows = [
   {

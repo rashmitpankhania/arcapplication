@@ -7,19 +7,19 @@ import {
 
 import PropTypes from 'prop-types';
 import { Lottie } from '@crello/react-lottie';
-import backArrow from '../assets/backArrow.svg';
-import forwardArrow from '../assets/forwardArrow.svg';
-import saveEnergyImg from '../assets/bulb.svg';
-import timerImg from '../assets/stopwatch.svg';
-import cashImg from '../assets/cash.svg';
-import documentAnimationData from '../animations/documentsAnimation/data';
-import scaleAnimationData from '../animations/scaleAnimation/data.json';
-import wheelAnimationData from '../animations/automationAnimation/data.json';
-import mobileAnimationData from '../animations/uxAnimation/data';
-import rootImg from '../assets/root.svg';
+import backArrow from '../../assets/backArrow.svg';
+import forwardArrow from '../../assets/forwardArrow.svg';
+import saveEnergyImg from '../../assets/bulb.svg';
+import timerImg from '../../assets/stopwatch.svg';
+import cashImg from '../../assets/cash.svg';
+import documentAnimationData from '../../animations/documentsAnimation/data';
+import scaleAnimationData from '../../animations/scaleAnimation/data.json';
+import wheelAnimationData from '../../animations/automationAnimation/data.json';
+import mobileAnimationData from '../../animations/uxAnimation/data';
+import rootImg from '../../assets/root.svg';
 
-import { Routes } from './Constants';
-import CallToAction from './ui/CallToAction';
+import { Routes } from '../Constants';
+import CallToAction from '../ui/CallToAction';
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {

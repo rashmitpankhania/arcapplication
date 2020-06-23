@@ -8,14 +8,14 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import useTheme from '@material-ui/core/styles/useTheme';
 import PropTypes from 'prop-types';
 import { Lottie } from '@crello/react-lottie';
-import { Routes } from './Constants';
-import backArrow from '../assets/backArrow.svg';
-import forwardArrow from '../assets/forwardArrow.svg';
-import CallToAction from './ui/CallToAction';
-import mobileAnimationData from '../animations/integrationAnimation/data.json';
-import extendAccessImg from '../assets/extendAccess.svg';
-import increaseEngImg from '../assets/increaseEngagement.svg';
-import extendFuncImg from '../assets/swissKnife.svg';
+import { Routes } from '../Constants';
+import backArrow from '../../assets/backArrow.svg';
+import forwardArrow from '../../assets/forwardArrow.svg';
+import CallToAction from '../ui/CallToAction';
+import mobileAnimationData from '../../animations/integrationAnimation/data.json';
+import extendAccessImg from '../../assets/extendAccess.svg';
+import increaseEngImg from '../../assets/increaseEngagement.svg';
+import extendFuncImg from '../../assets/swissKnife.svg';
 
 const MiddleIcons = [
   { text: 'Extend Functionality', img: extendFuncImg },

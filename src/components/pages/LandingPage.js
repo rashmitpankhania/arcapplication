@@ -12,13 +12,13 @@ import CardContent from '@material-ui/core/CardContent';
 
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import animationData from '../animations/landinganimation/data';
-import ButtonArrow from './ui/ButtonArrow';
-import revolutionBackground from '../assets/repeatingBackground.svg';
-import infoBackground from '../assets/infoBackground.svg';
-import { Routes } from './Constants';
-import CallToAction from './ui/CallToAction';
-import Services from './ui/Services';
+import animationData from '../../animations/landinganimation/data';
+import ButtonArrow from '../ui/ButtonArrow';
+import revolutionBackground from '../../assets/repeatingBackground.svg';
+import infoBackground from '../../assets/infoBackground.svg';
+import { Routes } from '../Constants';
+import CallToAction from '../ui/CallToAction';
+import Services from '../ui/Services';
 
 
 const useStyles = makeStyles((theme) => ({
