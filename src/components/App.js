@@ -13,7 +13,7 @@ import ServicesPage from './pages/ServicesPage';
 import CustomSoftwarePage from './pages/CustomSoftwarePage';
 import MobileAppsPage from './pages/MobileAppsPage';
 import WebsitePage from './pages/WebsitePage';
-// import RevolutionPage from './pages/RevolutionPage';
+import RevolutionPage from './pages/RevolutionPage';
 import ScrollToTop from './ui/ScrollToTop';
 
 const App = () => {
@@ -72,7 +72,16 @@ const App = () => {
             )}
           />
           <Route exact path={Routes.ESTIMATE} component={() => <h1>{PageNames.ESTIMATE}</h1>} />
-          <Route exact path={Routes.REVOLUTION} component={() => <h1>{PageNames.REVOLUTION}</h1>} />
+          <Route
+            exact
+            path={Routes.REVOLUTION}
+            render={() => (
+              <RevolutionPage
+                setSelectedIndex={setSelectedIndex}
+                setValue={setValue}
+              />
+            )}
+          />
           <Route exact path={Routes.ABOUT_US} component={() => <h1>{PageNames.ABOUT_US}</h1>} />
           <Route exact path={Routes.CONTACT_US} component={() => <h1>{PageNames.CONTACT_US}</h1>} />
           <Route
