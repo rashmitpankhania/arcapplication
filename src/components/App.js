@@ -13,6 +13,8 @@ import ServicesPage from './pages/ServicesPage';
 import CustomSoftwarePage from './pages/CustomSoftwarePage';
 import MobileAppsPage from './pages/MobileAppsPage';
 import WebsitePage from './pages/WebsitePage';
+// import RevolutionPage from './pages/RevolutionPage';
+import ScrollToTop from './ui/ScrollToTop';
 
 const App = () => {
   const [value, setValue] = React.useState(0);
@@ -21,6 +23,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
+        <ScrollToTop />
         <Header
           value={value}
           setValue={setValue}
