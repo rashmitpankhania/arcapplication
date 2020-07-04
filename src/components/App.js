@@ -16,6 +16,19 @@ import WebsitePage from './pages/WebsitePage';
 import RevolutionPage from './pages/RevolutionPage';
 import ScrollToTop from './ui/ScrollToTop';
 import AboutUsPage from './pages/AboutUsPage';
+import ContactUsPage from './pages/ContactUsPage';
+
+const list = [
+  { path: Routes.HOME, component: LandingPage },
+  { path: Routes.SERVICES, component: ServicesPage },
+  { path: Routes.MOBILE_APPS, component: MobileAppsPage },
+  { path: Routes.CUSTOM_SOFTWARE, component: CustomSoftwarePage },
+  { path: Routes.REVOLUTION, component: RevolutionPage },
+  { path: Routes.ABOUT_US, component: AboutUsPage },
+  { path: Routes.CONTACT_US, component: ContactUsPage },
+  { path: Routes.WEBSITES, component: WebsitePage },
+  // { path: Routes.ESTIMATE, component: () => <h1>{PageNames.ESTIMATE}</h1> },
+];
 
 const App = () => {
   const [value, setValue] = React.useState(0);
@@ -32,78 +45,11 @@ const App = () => {
           setSelectedIndex={setSelectedIndex}
         />
         <Switch>
-          <Route
-            exact
-            path={Routes.HOME}
-            render={() => (
-              <LandingPage
-                setValue={setValue}
-                setSelectedIndex={setSelectedIndex}
-              />
-            )}
-          />
-          <Route
-            exact
-            path={Routes.SERVICES}
-            render={() => (
-              <ServicesPage
-                setValue={setValue}
-                setSelectedIndex={setSelectedIndex}
-              />
-            )}
-          />
-          <Route
-            exact
-            path={Routes.MOBILE_APPS}
-            render={() => (
-              <MobileAppsPage
-                setValue={setValue}
-                setSelectedIndex={setSelectedIndex}
-              />
-            )}
-          />
-          <Route
-            exact
-            path={Routes.CUSTOM_SOFTWARE}
-            render={() => (
-              <CustomSoftwarePage
-                setSelectedIndex={setSelectedIndex}
-                setValue={setValue}
-              />
-            )}
-          />
-          <Route exact path={Routes.ESTIMATE} component={() => <h1>{PageNames.ESTIMATE}</h1>} />
-          <Route
-            exact
-            path={Routes.REVOLUTION}
-            render={() => (
-              <RevolutionPage
-                setSelectedIndex={setSelectedIndex}
-                setValue={setValue}
-              />
-            )}
-          />
-          <Route
-            exact
-            path={Routes.ABOUT_US}
-            render={() => (
-              <AboutUsPage
-                setSelectedIndex={setSelectedIndex}
-                setValue={setValue}
-              />
-            )}
-          />
-          <Route exact path={Routes.CONTACT_US} component={() => <h1>{PageNames.CONTACT_US}</h1>} />
-          <Route
-            exact
-            path={Routes.WEBSITES}
-            render={() => (
-              <WebsitePage
-                setSelectedIndex={setSelectedIndex}
-                setValue={setValue}
-              />
-            )}
-          />
+          {list.map((obj) => {
+            const { component: Component, path } = obj;
+            return <Route key={path} exact path={path} render={() => <Component setValue={setValue} setSelectedIndex={setSelectedIndex} />} />;
+          })}
+          <Route path={Routes.ESTIMATE} component={() => <h1>{PageNames.ESTIMATE}</h1>} />
         </Switch>
         <Footer
           setValue={setValue}
