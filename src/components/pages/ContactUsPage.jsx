@@ -47,50 +47,48 @@ const ContactUsPage = (props) => {
   return (
     <>
       <Grid container>
-        <Grid item lg={4}>
-          <Grid container direction="column" className={classes.mainContainer}>
-            <Grid item>
-              <Typography variant="h2">Contact Us</Typography>
-              <Typography variant="h6" color="primary">We&apos;re waiting.</Typography>
-            </Grid>
-            <Grid item style={{ marginTop: '1.5em' }}>
-              <span style={{ color: theme.palette.common.arcBlue }}>
-                <img src={phoneImg} alt="phone" />
-                &nbsp;
-                917-367-0547
+        <Grid item lg={4} container direction="column" className={classes.mainContainer}>
+          <Grid item>
+            <Typography variant="h2">Contact Us</Typography>
+            <Typography variant="h6" color="primary">We&apos;re waiting.</Typography>
+          </Grid>
+          <Grid item style={{ marginTop: '1.5em' }}>
+            <span style={{ color: theme.palette.common.arcBlue }}>
+              <img src={phoneImg} alt="phone" />
+              &nbsp;
+              917-367-0547
+            </span>
+          </Grid>
+          <Grid item style={{ marginTop: '1em' }}>
+            <span style={{ color: theme.palette.common.arcBlue }}>
+              <img src={emailImg} alt="email" />
+              &nbsp;
+              rashmitpankhania@gmail.com
+            </span>
+          </Grid>
+          <Grid item style={{ marginTop: '1em' }}>
+            <TextField id="standard-name" label="Name" fullWidth placeholder="John Doe" />
+          </Grid>
+          <Grid item style={{ marginTop: '1em' }}>
+            <TextField id="standard-phone" label="Phone Number" type="number" fullWidth placeholder="917-367-0547" />
+          </Grid>
+          <Grid item style={{ marginTop: '1em' }}>
+            <TextField id="standard-email" label="Email" type="email" fullWidth placeholder="rashmitpankhania@gmail.com" />
+          </Grid>
+          <Grid item style={{ marginTop: '1em' }}>
+            <TextField id="outlined-message" variant="outlined" multiline rows={4} fullWidth placeholder="Hello! We have an idea that we'd just love to share." />
+          </Grid>
+          <Grid item style={{ alignSelf: 'center', marginTop: '2em' }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.sendButton}
+            >
+              <span>
+                Send Message&nbsp;&nbsp;&nbsp;
+                <img src={sendIcon} alt="send" />
               </span>
-            </Grid>
-            <Grid item style={{ marginTop: '1em' }}>
-              <span style={{ color: theme.palette.common.arcBlue }}>
-                <img src={emailImg} alt="email" />
-                &nbsp;
-                rashmitpankhania@gmail.com
-              </span>
-            </Grid>
-            <Grid item style={{ marginTop: '1em' }}>
-              <TextField id="standard-name" label="Name" fullWidth placeholder="John Doe" />
-            </Grid>
-            <Grid item style={{ marginTop: '1em' }}>
-              <TextField id="standard-phone" label="Phone Number" type="number" fullWidth placeholder="917-367-0547" />
-            </Grid>
-            <Grid item style={{ marginTop: '1em' }}>
-              <TextField id="standard-email" label="Email" type="email" fullWidth placeholder="rashmitpankhania@gmail.com" />
-            </Grid>
-            <Grid item style={{ marginTop: '1em' }}>
-              <TextField id="outlined-message" variant="outlined" multiline rows={4} fullWidth placeholder="Hello! We have an idea that we'd just love to share." />
-            </Grid>
-            <Grid item style={{ alignSelf: 'center', marginTop: '2em' }}>
-              <Button
-                variant="contained"
-                color="secondary"
-                className={classes.sendButton}
-              >
-                <span>
-                  Send Message&nbsp;&nbsp;&nbsp;
-                  <img src={sendIcon} alt="send" />
-                </span>
-              </Button>
-            </Grid>
+            </Button>
           </Grid>
         </Grid>
         <Grid item container lg={8}>
