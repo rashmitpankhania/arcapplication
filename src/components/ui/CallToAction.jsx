@@ -47,9 +47,9 @@ const CallToAction = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-  const { setValue, setSelectedIndex } = props;
+  const { setValue, setSelectedIndex, classname } = props;
   return (
-    <Grid container className={classes.mainContainer} justify={matchesSM ? 'space-evenly' : 'space-between'} alignItems="center" direction={matchesSM ? 'column' : 'row'}>
+    <Grid container className={classes.mainContainer} style={classname} justify={matchesSM ? 'space-evenly' : 'space-between'} alignItems="center" direction={matchesSM ? 'column' : 'row'}>
       <Grid item style={{ marginLeft: matchesSM ? 0 : '5em' }}>
         <Grid container direction="column">
           <Grid item>
@@ -86,4 +86,9 @@ export default CallToAction;
 CallToAction.propTypes = {
   setValue: PropTypes.func.isRequired,
   setSelectedIndex: PropTypes.func.isRequired,
+  classname: PropTypes.objectOf(String),
+};
+
+CallToAction.defaultProps = {
+  classname: undefined,
 };

@@ -65,6 +65,13 @@ const theme = createMuiTheme({
     fontFamily: 'Roboto',
     fontWeight: 'bold',
   },
+  overrides: {
+    MuiInput: {
+      input: {
+        fontFamily: 'Roboto',
+      },
+    },
+  },
 });
 
 export default theme;
