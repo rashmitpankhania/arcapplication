@@ -90,7 +90,11 @@ const ContactUsPage = (props) => {
 
   const onConfirm = () => {
     setLoading(true);
-    axios.get('https://us-central1-arcapplication-fbdff.cloudfunctions.net/sendMail')
+    axios.get('https://us-central1-arcapplication-fbdff.cloudfunctions.net/sendMail', {
+      params: {
+        name, email, phone, message,
+      },
+    })
       .then(() => {
         setLoading(false);
         setOpen(false);
