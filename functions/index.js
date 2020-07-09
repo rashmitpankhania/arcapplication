@@ -1,6 +1,7 @@
 const admin = require('firebase-admin');
 const nodemailer = require('nodemailer');
 const functions  = require('firebase-functions');
+const cors  = require('cors')({origin: true});
 
 const config = functions.config();
 admin.initializeApp();
@@ -12,10 +13,12 @@ const mailToOptions = {from: 'Arc Development', to: 'sirruggedballs@outlook.com'
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 exports.sendMail = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
     transporter.sendMail(mailToOptions, error => {
-      if(error)
+      if (error)
         response.send(error);
       else
         response.send("Message sent Successfully!!");
     })
+  })
 });

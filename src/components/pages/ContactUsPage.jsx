@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core';
@@ -9,7 +10,9 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
+import Snackbar from '@material-ui/core/Snackbar';
 import CallToAction from '../ui/CallToAction';
 import phoneImg from '../../assets/phone.svg';
 import emailImg from '../../assets/email.svg';
@@ -55,6 +58,10 @@ const ContactUsPage = (props) => {
 
   const [message, setMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const [alert, setAlert] = React.useState({ open: false, message: '', backgroundColor: '' });
+
   const reEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const rePhone = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
 
@@ -66,7 +73,6 @@ const ContactUsPage = (props) => {
       case 'email':
         setEmail(event.target.value);
         if (reEmail.test(event.target.value) === false) setEmailHelper('Please Enter a valid Email address.');
-        else if (email === '') setEmailHelper('Email address is required.');
         else setEmailHelper('');
         break;
       case 'phone':
@@ -80,6 +86,24 @@ const ContactUsPage = (props) => {
       default:
         break;
     }
+  };
+
+  const onConfirm = () => {
+    setLoading(true);
+    axios.get('https://us-central1-arcapplication-fbdff.cloudfunctions.net/sendMail')
+      .then(() => {
+        setLoading(false);
+        setOpen(false);
+        setName('');
+        setPhone('');
+        setEmail('');
+        setMessage('');
+        setAlert({ open: true, message: 'Message sent successfully :)', backgroundColor: '#4BB543' });
+      })
+      .catch(() => {
+        setLoading(false);
+        setAlert({ open: true, message: 'Something went wrong.Please try again :(', backgroundColor: '#FF3232' });
+      });
   };
 
   return (
@@ -170,18 +194,21 @@ const ContactUsPage = (props) => {
                   color="secondary"
                   className={classes.sendButton}
                   type="submit"
-                  onClick={() => setOpen(false)}
+                  onClick={onConfirm}
                 >
-                  <span>
-                    Send Message&nbsp;&nbsp;&nbsp;
-                    <img src={sendIcon} alt="send" />
-                  </span>
+                  {loading ? <CircularProgress size={30} /> : (
+                    <span>
+                      Send Message&nbsp;&nbsp;&nbsp;
+                      <img src={sendIcon} alt="send" />
+                    </span>
+                  )}
                 </Button>
               </Grid>
             </Grid>
           </Grid>
         </DialogContent>
       </Dialog>
+      <Snackbar open={alert.open} message={alert.message} autoHideDuration={4000} onClose={() => setAlert({ ...alert, open: false })} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} ContentProps={{ style: { backgroundColor: alert.backgroundColor } }} />
     </>
   );
 };
