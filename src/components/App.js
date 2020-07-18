@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Header from './ui/Header';
 import theme from './ui/Theme';
-import { PageNames, Routes } from './Constants';
+import { Routes } from './Constants';
 import Footer from './ui/Footer';
 import LandingPage from './pages/LandingPage';
 import ServicesPage from './pages/ServicesPage';
@@ -17,6 +17,7 @@ import RevolutionPage from './pages/RevolutionPage';
 import ScrollToTop from './ui/ScrollToTop';
 import AboutUsPage from './pages/AboutUsPage';
 import ContactUsPage from './pages/ContactUsPage';
+import EstimatePage from './pages/EstimatePage';
 
 const list = [
   { path: Routes.HOME, component: LandingPage },
@@ -49,7 +50,7 @@ const App = () => {
             const { component: Component, path } = obj;
             return <Route key={path} exact path={path} render={() => <Component setValue={setValue} setSelectedIndex={setSelectedIndex} />} />;
           })}
-          <Route path={Routes.ESTIMATE} component={() => <h1>{PageNames.ESTIMATE}</h1>} />
+          <Route path={Routes.ESTIMATE} component={EstimatePage} />
         </Switch>
         <Footer
           setValue={setValue}
