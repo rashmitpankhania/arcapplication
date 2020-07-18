@@ -97,7 +97,7 @@ const defaultQuestions = [
 ];
 
 const softwareQuestions = [
-  { ...defaultQuestions[0], active: true },
+  { ...defaultQuestions[0], active: false },
   {
     id: 2,
     title: 'Which platforms do you need supported?',
@@ -131,7 +131,7 @@ const softwareQuestions = [
         cost: 100,
       },
     ],
-    active: false,
+    active: true,
   },
   {
     id: 3,
@@ -275,7 +275,6 @@ const softwareQuestions = [
   },
 ];
 
-
 const websiteQuestions = [
   { ...defaultQuestions[0], active: false },
   {
@@ -318,7 +317,7 @@ const websiteQuestions = [
 const EstimatePage = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [questions, setQuestions] = React.useState(softwareQuestions);
+  const [questions, setQuestions] = React.useState(defaultQuestions);
 
   const navigate = (back) => {
     const newQuestions = cloneDeep(questions);
@@ -346,9 +345,34 @@ const EstimatePage = () => {
     const newQuestions = cloneDeep(questions);
     const currentlyActive = newQuestions.filter((question) => question.active);
     const activeIndex = currentlyActive[0].id - 1;
+    const prevSelected = currentlyActive[0].options.filter((option) => option.selected);
     const newSelected = newQuestions[activeIndex].options[id - 1];
-    newSelected.selected = !newSelected.selected;
-    setQuestions(newQuestions);
+    switch (currentlyActive[0].subtitle) {
+      case 'Select one.':
+        if (prevSelected[0]) {
+          prevSelected[0].selected = !prevSelected[0].selected;
+        }
+        newSelected.selected = !newSelected.selected;
+        break;
+      default:
+        newSelected.selected = !newSelected.selected;
+        break;
+    }
+
+    switch (newSelected.title) {
+      case PageNames.CUSTOM_SOFTWARE:
+        setQuestions(softwareQuestions);
+        break;
+      case PageNames.MOBILE_APPS:
+        setQuestions(softwareQuestions);
+        break;
+      case PageNames.WEBSITES:
+        setQuestions(websiteQuestions);
+        break;
+      default:
+        setQuestions(newQuestions);
+        break;
+    }
   };
 
   return (
