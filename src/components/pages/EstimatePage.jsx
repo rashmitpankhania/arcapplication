@@ -9,6 +9,8 @@ import useTheme from '@material-ui/core/styles/useTheme';
 import Button from '@material-ui/core/Button';
 
 import IconButton from '@material-ui/core/IconButton';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
 import estimateData from '../../animations/estimateAnimation/data.json';
 import checkImg from '../../assets/check.svg';
 import sendImg from '../../assets/send.svg';
@@ -35,6 +37,7 @@ import androidImg from '../../assets/android.svg';
 import globeImg from '../../assets/globe.svg';
 import biometricsImg from '../../assets/biometrics.svg';
 import { PageNames } from '../Constants';
+import TextField from '@material-ui/core/TextField';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -318,6 +321,24 @@ const EstimatePage = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [questions, setQuestions] = React.useState(defaultQuestions);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [name, setName] = React.useState('');
+
+  const [phone, setPhone] = React.useState('');
+  const [phoneHelper, setPhoneHelper] = React.useState('');
+
+  const [email, setEmail] = React.useState('');
+  const [emailHelper, setEmailHelper] = React.useState('');
+
+  const [message, setMessage] = React.useState('');
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+
+  const [alert, setAlert] = React.useState({ open: false, message: '', backgroundColor: '' });
+
+  const reEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const rePhone = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
+
 
   const navigate = (back) => {
     const newQuestions = cloneDeep(questions);
@@ -375,6 +396,28 @@ const EstimatePage = () => {
     }
   };
 
+  const handleChange = (event) => {
+    switch (event.target.id) {
+      case 'name':
+        setName(event.target.value);
+        break;
+      case 'email':
+        setEmail(event.target.value);
+        if (reEmail.test(event.target.value) === false) setEmailHelper('Please Enter a valid Email address.');
+        else setEmailHelper('');
+        break;
+      case 'phone':
+        setPhone(event.target.value);
+        if (rePhone.test(event.target.value) === false) setPhoneHelper('Please Enter a valid Phone number.');
+        else setPhoneHelper('');
+        break;
+      case 'message':
+        setMessage(event.target.value);
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <>
       <Grid container className={classes.mainContainer}>
@@ -437,10 +480,39 @@ const EstimatePage = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Button variant="contained" className={classes.estimateButton}>Get Estimate</Button>
+            <Button variant="contained" onClick={() => setDialogOpen(true)} className={classes.estimateButton}>Get Estimate</Button>
           </Grid>
         </Grid>
       </Grid>
+      <Dialog open={dialogOpen} style={{ zIndex: theme.zIndex.modal + 2 }} onClose={() => setDialogOpen(false)}>
+        <Grid container justify="center">
+          <Grid item>
+            <Typography variant="h2" align="center">Estimate</Typography>
+          </Grid>
+        </Grid>
+        <DialogContent>
+          <Grid container>
+            <Grid item container direction="column">
+              <Grid item style={{ marginTop: '1em' }}>
+                <TextField id="name" label="Name" value={name} fullWidth placeholder="John Doe" onChange={handleChange} />
+              </Grid>
+              <Grid item style={{ marginTop: '1em' }}>
+                <TextField id="phone" label="Phone Number" value={phone} error={phoneHelper !== ''} helperText={phoneHelper} onChange={handleChange} fullWidth placeholder="917-367-0547" />
+              </Grid>
+              <Grid item style={{ marginTop: '1em' }}>
+                <TextField id="email" label="Email" type="email" error={emailHelper !== ''} helperText={emailHelper} value={email} onChange={handleChange} fullWidth placeholder="rashmitpankhania@gmail.com" />
+              </Grid>
+              <Grid item style={{ marginTop: '1em' }}>
+                <TextField id="message" variant="outlined" value={message} onChange={handleChange} multiline rows={4} fullWidth placeholder="Hello! We have an idea that we'd just love to share." />
+              </Grid>
+              <Grid item style={{ marginTop: '1em' }}>
+                <Typography variant="body1" paragraph>We can create this falallala for an estimated fallalal</Typography>
+                <Typography variant="body1" paragraph>Fill out your name, number, and email, place your request, and we’ll get back to you with details moving forward and a final price.</Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
