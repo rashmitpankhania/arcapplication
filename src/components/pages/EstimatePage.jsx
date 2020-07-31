@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Lottie } from '@crello/react-lottie';
 import { cloneDeep } from 'lodash';
 
@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
+import TextField from '@material-ui/core/TextField';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import estimateData from '../../animations/estimateAnimation/data.json';
 import checkImg from '../../assets/check.svg';
 import sendImg from '../../assets/send.svg';
@@ -37,7 +39,6 @@ import androidImg from '../../assets/android.svg';
 import globeImg from '../../assets/globe.svg';
 import biometricsImg from '../../assets/biometrics.svg';
 import { PageNames } from '../Constants';
-import TextField from '@material-ui/core/TextField';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -58,6 +59,12 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: theme.palette.secondary.light,
     },
+  },
+  specialText: {
+    fontFamily: 'Raleway',
+    fontWeight: 700,
+    fontSize: '1.5rem',
+    color: theme.palette.common.arcOrange,
   },
 }));
 
@@ -216,7 +223,7 @@ const softwareQuestions = [
         title: 'Low Complexity',
         subtitle: '(Informational)',
         icon: infoImg,
-        iconAlt: "'i' inside a circle",
+        iconAlt: '\'i\' inside a circle',
         selected: false,
         cost: 25,
       },
@@ -297,7 +304,7 @@ const websiteQuestions = [
       {
         id: 2,
         title: 'Interactive',
-        subtitle: "(Users, API's, Messaging)",
+        subtitle: '(Users, API\'s, Messaging)',
         icon: customizedImg,
         iconAlt: 'outline of two people',
         selected: false,
@@ -320,21 +327,29 @@ const websiteQuestions = [
 const EstimatePage = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [questions, setQuestions] = React.useState(defaultQuestions);
-  const [dialogOpen, setDialogOpen] = React.useState(false);
-  const [name, setName] = React.useState('');
+  const [questions, setQuestions] = useState(defaultQuestions);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [name, setName] = useState('');
 
-  const [phone, setPhone] = React.useState('');
-  const [phoneHelper, setPhoneHelper] = React.useState('');
+  const [phone, setPhone] = useState('');
+  const [phoneHelper, setPhoneHelper] = useState('');
 
-  const [email, setEmail] = React.useState('');
-  const [emailHelper, setEmailHelper] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [emailHelper, setEmailHelper] = useState('');
 
-  const [message, setMessage] = React.useState('');
-  const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [message, setMessage] = useState('');
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [alert, setAlert] = React.useState({ open: false, message: '', backgroundColor: '' });
+  const [alert, setAlert] = useState({ open: false, message: '', backgroundColor: '' });
+  const [total, setTotal] = useState(0);
+
+  const [service, setService] = useState([]);
+  const [platforms, setPlatforms] = useState('');
+  const [features, setFeatures] = useState('');
+  const [customFeatures, setCustomFeatures] = useState('');
+  const [categories, setCategories] = useState('');
+  const [users, setUsers] = useState('');
 
   const reEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const rePhone = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
@@ -383,12 +398,15 @@ const EstimatePage = () => {
     switch (newSelected.title) {
       case PageNames.CUSTOM_SOFTWARE:
         setQuestions(softwareQuestions);
+        setService(newSelected.title);
         break;
       case PageNames.MOBILE_APPS:
         setQuestions(softwareQuestions);
+        setService(newSelected.title);
         break;
       case PageNames.WEBSITES:
         setQuestions(websiteQuestions);
+        setService(newSelected.title);
         break;
       default:
         setQuestions(newQuestions);
@@ -418,6 +436,68 @@ const EstimatePage = () => {
         break;
     }
   };
+
+  const getTotal = () => {
+    let rawTotal = 0;
+    rawTotal = questions
+      .map((question) => question.options.filter((option) => option.selected))
+      .filter((question) => question.length > 0)
+      .reduce((acc, option) => [...acc, ...option])
+      .reduce((acc, option) => acc + option.cost, 0);
+    if (questions.length > 2) {
+      const userCost = questions
+        .filter((question) => question.title === 'How many users do you expect?')
+        .map((question) => question.options.filter((option) => option.selected))[0][0].cost;
+      rawTotal -= userCost;
+      rawTotal *= userCost;
+    }
+    setTotal(rawTotal);
+  };
+
+  const getPlatforms = () => {
+    const newPlatforms = [];
+    if (questions.length > 2) {
+      questions.filter((question) => question.title === 'Which platforms do you need supported?')
+        .map((question) => question.options.filter((option) => option.selected))[0].map((option) => newPlatforms.push(option.title));
+    }
+    if (newPlatforms.length > 0) {
+      if (newPlatforms.indexOf('Web Application') > -1 && newPlatforms.length === 1) {
+        setPlatforms('a Web Application.');
+      } else if (newPlatforms.indexOf('Web Application') > -1 && newPlatforms.length === 2) {
+        setPlatforms(`a Web Application and an ${newPlatforms[1]}.`);
+      } else if (newPlatforms.length === 1) {
+        setPlatforms(`an ${newPlatforms[0]}`);
+      } else if (newPlatforms.length === 2) {
+        setPlatforms('an iOS Application and an Android Application.');
+      } else if (newPlatforms.length === 3) {
+        setPlatforms('a Web Application, an iOS Application, and an Android Application.');
+      }
+    }
+  };
+
+  const getFeatures = () => {
+    const newFeatures = [];
+    if (questions.length > 2) {
+      questions.filter((question) => question.title === 'Which features do you expect to use?')
+        .map((question) => question.options.filter((option) => option.selected)).map((option) => option.map((op) => newFeatures.push(op.title)));
+    }
+    let tempFeature = '';
+    if (newFeatures.length > 0) {
+      if (newFeatures.length === 1) {
+        tempFeature = `${newFeatures[0]}.`;
+      } else if (newFeatures.length === 2) {
+        tempFeature = `${newFeatures[0]} and ${newFeatures[1]}.`;
+      } else {
+        const c = [];
+        newFeatures.filter((feature, index) => index !== newFeatures.length - 1).map((feature) => c.push(`${feature}, `));
+        tempFeature = c.join('');
+      }
+    }
+    if (newFeatures.length > 0 && newFeatures.length !== 1 && newFeatures.length !== 2) {
+      tempFeature = `${tempFeature} and ${newFeatures[newFeatures.length - 1]}.`;
+    }
+    setFeatures(tempFeature);
+  };
   return (
     <>
       <Grid container className={classes.mainContainer}>
@@ -438,7 +518,14 @@ const EstimatePage = () => {
           {questions.filter((question) => question.active).map((question) => (
             <React.Fragment key={question.id}>
               <Grid item>
-                <Typography variant="h2" align="center" style={{ fontWeight: 300 }} gutterBottom>{question.title}</Typography>
+                <Typography
+                  variant="h2"
+                  align="center"
+                  style={{ fontWeight: 300 }}
+                  gutterBottom
+                >
+                  {question.title}
+                </Typography>
                 <Typography variant="body1" align="center" gutterBottom>{question.subtitle}</Typography>
               </Grid>
               <Grid item container style={{ marginTop: '2em' }}>
@@ -452,7 +539,10 @@ const EstimatePage = () => {
                     key={option.title}
                     component={Button}
                     style={{
-                      display: 'grid', borderRadius: 0, textTransform: 'none', backgroundColor: option.selected ? theme.palette.common.arcOrange : null,
+                      display: 'grid',
+                      borderRadius: 0,
+                      textTransform: 'none',
+                      backgroundColor: option.selected ? theme.palette.common.arcOrange : null,
                     }}
                   >
                     <Grid item style={{ maxWidth: '14em' }}>
@@ -480,34 +570,127 @@ const EstimatePage = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Button variant="contained" onClick={() => setDialogOpen(true)} className={classes.estimateButton}>Get Estimate</Button>
+            <Button variant="contained" onClick={() => { setDialogOpen(true); getTotal(); getPlatforms(); getFeatures(); }} className={classes.estimateButton}>
+              Get
+              Estimate
+            </Button>
           </Grid>
         </Grid>
       </Grid>
-      <Dialog open={dialogOpen} style={{ zIndex: theme.zIndex.modal + 2 }} onClose={() => setDialogOpen(false)}>
-        <Grid container justify="center">
-          <Grid item>
-            <Typography variant="h2" align="center">Estimate</Typography>
-          </Grid>
-        </Grid>
+      <Dialog open={dialogOpen} aria-labelledby="simple-dialog-title" fullWidth style={{ zIndex: theme.zIndex.modal + 2 }} onClose={() => setDialogOpen(false)}>
+        <DialogTitle disableTypography id="simple-dialog-title">
+          <Typography variant="h2" align="center">Estimate</Typography>
+        </DialogTitle>
         <DialogContent>
           <Grid container>
-            <Grid item container direction="column">
-              <Grid item style={{ marginTop: '1em' }}>
-                <TextField id="name" label="Name" value={name} fullWidth placeholder="John Doe" onChange={handleChange} />
+            <Grid item container md={7} direction="column">
+              <Grid item>
+                <TextField
+                  id="name"
+                  label="Name"
+                  value={name}
+                  fullWidth
+                  placeholder="John Doe"
+                  onChange={handleChange}
+                />
               </Grid>
-              <Grid item style={{ marginTop: '1em' }}>
-                <TextField id="phone" label="Phone Number" value={phone} error={phoneHelper !== ''} helperText={phoneHelper} onChange={handleChange} fullWidth placeholder="917-367-0547" />
+              <Grid item style={{ marginTop: '0.5em' }}>
+                <TextField
+                  id="phone"
+                  label="Phone Number"
+                  value={phone}
+                  error={phoneHelper !== ''}
+                  helperText={phoneHelper}
+                  onChange={handleChange}
+                  fullWidth
+                  placeholder="917-367-0547"
+                />
               </Grid>
-              <Grid item style={{ marginTop: '1em' }}>
-                <TextField id="email" label="Email" type="email" error={emailHelper !== ''} helperText={emailHelper} value={email} onChange={handleChange} fullWidth placeholder="rashmitpankhania@gmail.com" />
+              <Grid item style={{ marginTop: '0.5em' }}>
+                <TextField
+                  id="email"
+                  label="Email"
+                  type="email"
+                  error={emailHelper !== ''}
+                  helperText={emailHelper}
+                  value={email}
+                  onChange={handleChange}
+                  fullWidth
+                  placeholder="rashmitpankhania@gmail.com"
+                />
               </Grid>
-              <Grid item style={{ marginTop: '1em' }}>
-                <TextField id="message" variant="outlined" value={message} onChange={handleChange} multiline rows={4} fullWidth placeholder="Hello! We have an idea that we'd just love to share." />
+              <Grid item style={{ marginTop: '0.5em' }}>
+                <TextField
+                  id="message"
+                  variant="outlined"
+                  value={message}
+                  onChange={handleChange}
+                  multiline
+                  rows={3}
+                  fullWidth
+                  placeholder="Hello! We have an idea that we'd just love to share."
+                />
               </Grid>
-              <Grid item style={{ marginTop: '1em' }}>
-                <Typography variant="body1" paragraph>We can create this falallala for an estimated fallalal</Typography>
-                <Typography variant="body1" paragraph>Fill out your name, number, and email, place your request, and we’ll get back to you with details moving forward and a final price.</Typography>
+              <Grid item style={{ marginTop: '0.5em' }}>
+                <Typography variant="body1" paragraph>
+                  We can create this digital solution for an estimate
+                  <span className={classes.specialText}>
+                    $
+                    {total.toFixed(2)}
+                  </span>
+                </Typography>
+                <Typography variant="body1">
+                  Fill out your name, number, and email, place your request, and
+                  we’ll get back to you with details moving forward and a final price.
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item container md={5} direction="column">
+              <Grid item>
+                <Grid container direction="column">
+                  <Grid item container alignItems="center">
+                    <Grid item>
+                      <img src={checkImg} alt="check Mark" />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">
+                        You want
+                        {' '}
+                        {service}
+                        {' '}
+                        for
+                        {' '}
+                        {platforms}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item container alignItems="center">
+                    <Grid item>
+                      <img src={checkImg} alt="check Mark" />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">
+                        with
+                        {' '}
+                        {features}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                  <Grid item container alignItems="center">
+                    <Grid item>
+                      <img src={checkImg} alt="check Mark" />
+                    </Grid>
+                    <Grid item>
+                      <Typography variant="body1">Pehla item</Typography>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Button variant="contained" className={classes.estimateButton}>
+                  Place Request&nbsp;&nbsp;&nbsp;
+                  <img src={sendImg} alt="send arrow" />
+                </Button>
               </Grid>
             </Grid>
           </Grid>
