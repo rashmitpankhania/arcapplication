@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import useTheme from '@material-ui/core/styles/useTheme';
 import Button from '@material-ui/core/Button';
-
 import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -399,14 +398,29 @@ const EstimatePage = () => {
       case PageNames.CUSTOM_SOFTWARE:
         setQuestions(softwareQuestions);
         setService(newSelected.title);
+        setPlatforms('');
+        setFeatures('');
+        setCustomFeatures('');
+        setCategories('');
+        setUsers('');
         break;
       case PageNames.MOBILE_APPS:
         setQuestions(softwareQuestions);
         setService(newSelected.title);
+        setPlatforms('');
+        setFeatures('');
+        setCustomFeatures('');
+        setCategories('');
+        setUsers('');
         break;
       case PageNames.WEBSITES:
         setQuestions(websiteQuestions);
         setService(newSelected.title);
+        setPlatforms('');
+        setFeatures('');
+        setCustomFeatures('');
+        setCategories('');
+        setUsers('');
         break;
       default:
         setQuestions(newQuestions);
@@ -447,9 +461,10 @@ const EstimatePage = () => {
     if (questions.length > 2) {
       const userCost = questions
         .filter((question) => question.title === 'How many users do you expect?')
-        .map((question) => question.options.filter((option) => option.selected))[0][0].cost;
-      rawTotal -= userCost;
-      rawTotal *= userCost;
+        .map((question) => question.options.filter((option) => option.selected))[0][0];
+      setUsers(userCost.title);
+      rawTotal -= userCost.cost;
+      rawTotal *= userCost.cost;
     }
     setTotal(rawTotal);
   };
@@ -498,6 +513,74 @@ const EstimatePage = () => {
     }
     setFeatures(tempFeature);
   };
+
+  const getCustomFeatures = () => {
+    let newCustomFeatures = '';
+    if (questions.length > 2) {
+      newCustomFeatures = questions.filter((question) => question.title === 'What type of custom features do you expect to need?')
+        .map((question) => question.options.filter((option) => option.selected))[0][0].title;
+      setCustomFeatures(newCustomFeatures);
+    }
+  };
+
+  const getCategories = () => {
+    if (questions.length === 2) {
+      const tempCategory = questions.filter((question) => question.title === 'Which type of website are you wanting?')[0].options.filter((option) => option.selected)[0].title;
+      setCategories(tempCategory);
+    }
+  };
+
+  const softwareCategory = (
+    <Grid container direction="column">
+      <Grid item container alignItems="center">
+        <Grid item>
+          <img src={checkImg} alt="check Mark" />
+        </Grid>
+        <Grid item>
+          <Typography variant="body1">
+            {`You want ${service} for ${platforms}`}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid item container alignItems="center">
+        <Grid item>
+          <img src={checkImg} alt="check Mark" />
+        </Grid>
+        <Grid item>
+          <Typography variant="body1">
+            {`with ${features}`}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid item container alignItems="center">
+        <Grid item>
+          <img src={checkImg} alt="check Mark" />
+        </Grid>
+        <Grid item>
+          <Typography variant="body1">
+            {`The Custom features will be of ${customFeatures.toLowerCase()} and the project will be used by about ${users} users.`}
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+
+  const websiteCategory = (
+    <Grid container direction="column">
+      <Grid item container alignItems="center">
+        <Grid item>
+          <img src={checkImg} alt="check Mark" />
+        </Grid>
+        <Grid item>
+          <Typography variant="body1">
+            {`You have selected ${categories === 'Basic' ? 'a Basic website.' : `an ${categories} website.`}`}
+          </Typography>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+
+
   return (
     <>
       <Grid container className={classes.mainContainer}>
@@ -570,7 +653,7 @@ const EstimatePage = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Button variant="contained" onClick={() => { setDialogOpen(true); getTotal(); getPlatforms(); getFeatures(); }} className={classes.estimateButton}>
+            <Button variant="contained" onClick={() => { setDialogOpen(true); getTotal(); getPlatforms(); getFeatures(); getCustomFeatures(); getCategories(); }} className={classes.estimateButton}>
               Get
               Estimate
             </Button>
@@ -647,44 +730,7 @@ const EstimatePage = () => {
             </Grid>
             <Grid item container md={5} direction="column">
               <Grid item>
-                <Grid container direction="column">
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={checkImg} alt="check Mark" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">
-                        You want
-                        {' '}
-                        {service}
-                        {' '}
-                        for
-                        {' '}
-                        {platforms}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={checkImg} alt="check Mark" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">
-                        with
-                        {' '}
-                        {features}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                  <Grid item container alignItems="center">
-                    <Grid item>
-                      <img src={checkImg} alt="check Mark" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body1">Pehla item</Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
+                {questions.length > 2 ? softwareCategory : websiteCategory}
               </Grid>
               <Grid item>
                 <Button variant="contained" className={classes.estimateButton}>
