@@ -12,6 +12,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { useMediaQuery } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
 import estimateData from '../../animations/estimateAnimation/data.json';
 import checkImg from '../../assets/check.svg';
 import sendImg from '../../assets/send.svg';
@@ -326,6 +328,9 @@ const websiteQuestions = [
 const EstimatePage = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
+
   const [questions, setQuestions] = useState(defaultQuestions);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [name, setName] = useState('');
@@ -337,10 +342,6 @@ const EstimatePage = () => {
   const [emailHelper, setEmailHelper] = useState('');
 
   const [message, setMessage] = useState('');
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const [alert, setAlert] = useState({ open: false, message: '', backgroundColor: '' });
   const [total, setTotal] = useState(0);
 
   const [service, setService] = useState([]);
@@ -452,7 +453,7 @@ const EstimatePage = () => {
   };
 
   const getTotal = () => {
-    let rawTotal = 0;
+    let rawTotal;
     rawTotal = questions
       .map((question) => question.options.filter((option) => option.selected))
       .filter((question) => question.length > 0)
@@ -530,70 +531,43 @@ const EstimatePage = () => {
     }
   };
 
-  const softwareCategory = (
-    <Grid container direction="column">
-      <Grid item container alignItems="center">
-        <Grid item>
-          <img src={checkImg} alt="check Mark" />
-        </Grid>
-        <Grid item>
-          <Typography variant="body1">
-            {`You want ${service} for ${platforms}`}
-          </Typography>
-        </Grid>
+  const handleCategory = () => {
+    const softwareArray = [
+      ` You want ${service} for ${platforms}`,
+      ` with ${features}`,
+      ` The Custom features will be of ${customFeatures.toLowerCase()} and the project will be used by about ${users} users.`,
+    ];
+    const websiteArray = [
+      `You have selected ${categories === 'Basic' ? 'a Basic website.' : `an ${categories} website.`}`,
+    ];
+    const dataArray = questions.length > 2 ? softwareArray : websiteArray;
+    return (
+      <Grid container direction="column">
+        {dataArray.map((str) => (
+          <Grid key={str.length} item container alignItems="center">
+            <Typography variant="body1" paragraph>
+              <img src={checkImg} alt="check Mark" style={{ verticalAlign: 'bottom' }} />
+              {str}
+            </Typography>
+          </Grid>
+        ))}
       </Grid>
-      <Grid item container alignItems="center">
-        <Grid item>
-          <img src={checkImg} alt="check Mark" />
-        </Grid>
-        <Grid item>
-          <Typography variant="body1">
-            {`with ${features}`}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid item container alignItems="center">
-        <Grid item>
-          <img src={checkImg} alt="check Mark" />
-        </Grid>
-        <Grid item>
-          <Typography variant="body1">
-            {`The Custom features will be of ${customFeatures.toLowerCase()} and the project will be used by about ${users} users.`}
-          </Typography>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-
-  const websiteCategory = (
-    <Grid container direction="column">
-      <Grid item container alignItems="center">
-        <Grid item>
-          <img src={checkImg} alt="check Mark" />
-        </Grid>
-        <Grid item>
-          <Typography variant="body1">
-            {`You have selected ${categories === 'Basic' ? 'a Basic website.' : `an ${categories} website.`}`}
-          </Typography>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-
+    );
+  };
 
   return (
     <>
       <Grid container className={classes.mainContainer}>
         <Grid item container lg direction="column">
           <Grid item>
-            <Typography variant="h2">Estimate</Typography>
+            <Typography variant="h2" align={matchesMD ? 'center' : 'inherit'}>Estimate</Typography>
           </Grid>
-          <Grid item style={{ marginRight: '2.5em', maxWidth: '50em' }}>
+          <Grid item style={{ marginRight: matchesMD ? 0 : '4em' }}>
             <Lottie
               config={{ loop: true, autoplay: true, animationData: estimateData }}
-              height="30em"
-              width="40em"
-              style={{ maxWidth: '40em', margin: 0 }}
+              height={matchesMD ? '10em' : '30em'}
+              width={matchesMD ? '100%' : '40em'}
+              style={{ margin: 0 }}
             />
           </Grid>
         </Grid>
@@ -660,13 +634,22 @@ const EstimatePage = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Dialog open={dialogOpen} aria-labelledby="simple-dialog-title" fullWidth style={{ zIndex: theme.zIndex.modal + 2 }} onClose={() => setDialogOpen(false)}>
+      <Dialog
+        open={dialogOpen}
+        aria-labelledby="simple-dialog-title"
+        fullScreen={matchesSM}
+        fullWidth
+        maxWidth="md"
+        PaperProps={{ style: { paddingTop: '3em', paddingBottom: '3em' } }}
+        style={{ zIndex: theme.zIndex.modal + 2 }}
+        onClose={() => setDialogOpen(false)}
+      >
         <DialogTitle disableTypography id="simple-dialog-title">
           <Typography variant="h2" align="center">Estimate</Typography>
         </DialogTitle>
         <DialogContent>
-          <Grid container>
-            <Grid item container md={7} direction="column">
+          <Grid container justify="space-around">
+            <Grid item container md={7} style={{ maxWidth: '20em' }} direction="column">
               <Grid item>
                 <TextField
                   id="name"
@@ -728,16 +711,25 @@ const EstimatePage = () => {
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item container md={5} direction="column">
-              <Grid item>
-                {questions.length > 2 ? softwareCategory : websiteCategory}
-              </Grid>
+            <Grid item container md={5} style={{ maxWidth: '30em' }} direction="column" alignItems={matchesSM ? 'center' : null}>
+              <Hidden smDown>
+                <Grid item>
+                  {handleCategory()}
+                </Grid>
+              </Hidden>
               <Grid item>
                 <Button variant="contained" className={classes.estimateButton}>
                   Place Request&nbsp;&nbsp;&nbsp;
                   <img src={sendImg} alt="send arrow" />
                 </Button>
               </Grid>
+              <Hidden mdUp>
+                <Grid item style={{ marginBottom: matchesSM ? '5em' : 0 }}>
+                  <Button style={{ fontWeight: 300 }} color="primary" onClick={() => setDialogOpen(false)}>
+                    Cancel
+                  </Button>
+                </Grid>
+              </Hidden>
             </Grid>
           </Grid>
         </DialogContent>
