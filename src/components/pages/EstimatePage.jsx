@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { Lottie } from '@crello/react-lottie';
 import { cloneDeep } from 'lodash';
@@ -14,6 +15,9 @@ import TextField from '@material-ui/core/TextField';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useMediaQuery } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
+import Snackbar from '@material-ui/core/Snackbar';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 import estimateData from '../../animations/estimateAnimation/data.json';
 import checkImg from '../../assets/check.svg';
 import sendImg from '../../assets/send.svg';
@@ -344,6 +348,10 @@ const EstimatePage = () => {
   const [message, setMessage] = useState('');
   const [total, setTotal] = useState(0);
 
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState({ open: false, message: '', backgroundColor: '' });
+
   const [service, setService] = useState([]);
   const [platforms, setPlatforms] = useState('');
   const [features, setFeatures] = useState('');
@@ -555,6 +563,24 @@ const EstimatePage = () => {
     );
   };
 
+  const sendEstimate = () => {
+    setLoading(true);
+    axios.get('https://us-central1-arcapplication-fbdff.cloudfunctions.net/sendMail', {
+      params: {
+        name, email, phone, message, category: categories, total, service, users, platforms, features, customFeatures,
+      },
+    })
+      .then(() => {
+        setLoading(false);
+        setAlert({ open: true, message: 'Estimate placed successfully :)', backgroundColor: '#4BB543' });
+        setDialogOpen(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setAlert({ open: true, message: 'Something went wrong.Please try again :(', backgroundColor: '#FF3232' });
+      });
+  };
+
   return (
     <>
       <Grid container className={classes.mainContainer}>
@@ -718,9 +744,13 @@ const EstimatePage = () => {
                 </Grid>
               </Hidden>
               <Grid item>
-                <Button variant="contained" className={classes.estimateButton}>
-                  Place Request&nbsp;&nbsp;&nbsp;
-                  <img src={sendImg} alt="send arrow" />
+                <Button onClick={sendEstimate} variant="contained" className={classes.estimateButton}>
+                  {loading ? <CircularProgress size={30} /> : (
+                    <span>
+                      Place Request&nbsp;&nbsp;&nbsp;
+                      <img src={sendImg} alt="send arrow" />
+                    </span>
+                  )}
                 </Button>
               </Grid>
               <Hidden mdUp>
@@ -734,6 +764,7 @@ const EstimatePage = () => {
           </Grid>
         </DialogContent>
       </Dialog>
+      <Snackbar open={alert.open} message={alert.message} autoHideDuration={4000} onClose={() => setAlert({ ...alert, open: false })} anchorOrigin={{ vertical: 'top', horizontal: 'center' }} ContentProps={{ style: { backgroundColor: alert.backgroundColor } }} />
     </>
   );
 };
