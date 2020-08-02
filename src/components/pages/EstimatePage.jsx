@@ -348,7 +348,6 @@ const EstimatePage = () => {
   const [message, setMessage] = useState('');
   const [total, setTotal] = useState(0);
 
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ open: false, message: '', backgroundColor: '' });
 
@@ -581,6 +580,16 @@ const EstimatePage = () => {
       });
   };
 
+  const estimateDisabled = () => {
+    const emptyQuestions = questions.map((question) => question.options.filter((option) => option.selected)).filter((question) => question.length === 0);
+    console.log(emptyQuestions);
+    if (questions.length === 2) {
+      if (emptyQuestions.length === 1) return false;
+    } else if (questions.length === 1) return true;
+    else if (emptyQuestions.length < 3 && questions[questions.length - 1].options.filter((option) => option.selected).length > 0 && questions[questions.length - 2].options.filter((option) => option.selected).length > 0) return false;
+    return true;
+  };
+
   return (
     <>
       <Grid container className={classes.mainContainer}>
@@ -653,7 +662,7 @@ const EstimatePage = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Button variant="contained" onClick={() => { setDialogOpen(true); getTotal(); getPlatforms(); getFeatures(); getCustomFeatures(); getCategories(); }} className={classes.estimateButton}>
+            <Button variant="contained" disabled={estimateDisabled()} onClick={() => { setDialogOpen(true); getTotal(); getPlatforms(); getFeatures(); getCustomFeatures(); getCategories(); }} className={classes.estimateButton}>
               Get
               Estimate
             </Button>
@@ -744,7 +753,12 @@ const EstimatePage = () => {
                 </Grid>
               </Hidden>
               <Grid item>
-                <Button onClick={sendEstimate} variant="contained" className={classes.estimateButton}>
+                <Button
+                  onClick={sendEstimate}
+                  disabled={name === '' || message === '' || phoneHelper !== '' || emailHelper !== '' || email === '' || phone === ''}
+                  variant="contained"
+                  className={classes.estimateButton}
+                >
                   {loading ? <CircularProgress size={30} /> : (
                     <span>
                       Place Request&nbsp;&nbsp;&nbsp;
